@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务器宣传页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #50b3a2;
+            color: white;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header .highlight, header .current a {
+            color: #e8491d;
+            font-weight: bold;
+        }
+        header a:hover {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .banner {
+            padding: 40px;
+            color: white;
+            background: url('server-banner.jpg') no-repeat 0 -100px;
+            min-height: 400px;
+            background-size: cover;
+        }
+        .banner h1 {
+            margin: 0;
+        }
+        .main-col {
+            float: left;
+            width: 70%;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+        .sidebar {
+            float: right;
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        footer {
+            background: #50b3a2;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">服务器简介</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="index.html">首页</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="services.html">服务</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section class="banner">
+        <div class="container">
+            <h1>欢迎来到我们的服务器！</h1>
+            <p>原版服务器 使用内网穿透提供联机服务最多32人同时在线游玩</p>
+            <p>服主：BaiLinhaoyu 管理：jiyouyang</p>
+            <p>IP地址：103.40.14.10 端口：11613 国际基岩版：1.21.41</p>
+            <p>QQ群：339880692</p>
+        </div>
+    </section>
+    <section class="main-col">
+        <article>
+            <h1>服务器介绍</h1>
+            <p>IP地址：103.40.14.10 端口：11613 国际基岩版：1.21.41</p>
+        </article>
+    </section>
+    <aside class="sidebar">
+        <h3>联系信息</h3>
+        <p>QQ群：339880692</p>
+    </aside>
+    <footer>
+        <p>版权所有 &copy; 2024 白林BaiLin</p>
+    </footer>
+</body>
+</html>
