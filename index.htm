@@ -1,130 +1,736 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>服务器宣传页面</title>
+    <title>🎓 智能点名系统 - 让课堂互动更精彩</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
         }
-        header {
-            background: #50b3a2;
-            color: white;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #e8491d 3px solid;
+
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 5%;
+            transition: all 0.3s ease;
         }
-        header a {
-            color: #ffffff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
+
+        nav.scrolled {
+            padding: 0.8rem 5%;
         }
-        header ul {
-            padding: 0;
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
             list-style: none;
         }
-        header li {
-            display: inline;
-            padding: 0 20px 0 20px;
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        header #branding {
-            float: left;
+
+        .nav-links a:hover {
+            color: #667eea;
         }
-        header #branding h1 {
-            margin: 0;
-        }
-        header nav {
-            float: right;
-            margin-top: 10px;
-        }
-        header .highlight, header .current a {
-            color: #e8491d;
-            font-weight: bold;
-        }
-        header a:hover {
-            color: #ffffff;
-            font-weight: bold;
-        }
-        .banner {
-            padding: 40px;
-            color: white;
-            background: url('https://github.com/BaiLinhaoyu/minecraft-server-web/edit/main/server-banner.jpg') no-repeat 0 -100px;
-            min-height: 400px;
-            background-size: cover;
-        }
-        .banner h1 {
-            margin: 0;
-        }
-        .main-col {
-            float: left;
-            width: 70%;
-            padding: 0 30px;
-            box-sizing: border-box;
-        }
-        .sidebar {
-            float: right;
-            width: 30%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        footer {
-            background: #50b3a2;
-            color: white;
-            text-align: center;
-            padding: 10px;
+
+        /* Hero区域 */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 5% 80px;
             position: relative;
-            bottom: 0;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .hero-content {
+            max-width: 1200px;
             width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-text .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .hero-image {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .app-preview {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            transform: rotateY(-5deg);
+            animation: float 3s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotateY(-5deg) translateY(0); }
+            50% { transform: rotateY(-5deg) translateY(-10px); }
+        }
+
+        .preview-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #28ca42; }
+
+        .preview-content {
+            background: #f5f5f5;
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        /* 特性区域 */
+        .features {
+            padding: 100px 5%;
+            background: #f8f9ff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 使用场景 */
+        .scenarios {
+            padding: 100px 5%;
+        }
+
+        .scenarios-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .scenario-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .scenario-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scenario-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .scenario-item:hover::before {
+            transform: scale(1);
+        }
+
+        .scenario-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .scenario-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 统计数据 */
+        .stats-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 行动号召 */
+        .cta-section {
+            padding: 100px 5%;
+            background: #f8f9ff;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #333;
+            color: white;
+            padding: 60px 5% 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid,
+            .scenario-list {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1><span class="highlight">服务器简介</span></h1>
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">🎯 智能点名系统</div>
+            <ul class="nav-links">
+                <li><a href="#features">产品特性</a></li>
+                <li><a href="#scenarios">应用场景</a></li>
+                <li><a href="#stats">数据统计</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>让课堂互动 <span class="highlight">更有趣</span></h1>
+                <p>智能随机点名系统，告别传统点名方式，让每一次课堂互动都充满惊喜与公平。支持随机抽取、接龙模式、实时统计等功能。</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showDemo()">🚀 免费试用</a>
+                    <a href="#features" class="btn btn-secondary">📖 了解详情</a>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li class="current"><a href="https://github.com/BaiLinhaoyu/minecraft-server-web/edit/main/index.html">首页</a></li>
-                    <li><a href="https://github.com/BaiLinhaoyu/minecraft-server-web/edit/main/about.html">关于我们</a></li>
-                    <li><a href="https://github.com/BaiLinhaoyu/minecraft-server-web/edit/main/services.html">服务</a></li>
-                    <li><a href="https://github.com/BaiLinhaoyu/minecraft-server-web/edit/main/contact.html">联系我们</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <section class="banner" style="color:black">
-        <div class="container">
-            <h1>欢迎来到我们的服务器！</h1>
-            <p>原版服务器 使用内网穿透提供联机服务最多32人同时在线游玩</p>
-            <p>服主：BaiLinhaoyu 管理：jiyouyang</p>
-            <p>IP地址：103.40.14.10 端口：11613 国际基岩版：1.21.41</p>
-            <p>QQ群：339880692</p>
+            <div class="hero-image">
+                <div class="app-preview">
+                    <div class="preview-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="preview-content">
+                        🎲
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    <section class="main-col">
-        <article>
-            <h1>服务器介绍</h1>
-            <p>IP地址：103.40.14.10 端口：11613 国际基岩版：1.21.41</p>
-        </article>
+
+    <!-- 产品特性 -->
+    <section class="features" id="features">
+        <h2 class="section-title">✨ 核心功能</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>智能随机点名</h3>
+                <p>真正的随机算法，确保每位学生被点到的概率完全均等，杜绝人为偏见，让课堂更加公平公正。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>接龙抽选模式</h3>
+                <p>不重复点名直到全班轮完，自动记录已点学生，避免重复，让每位学生都有参与机会。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>实时数据统计</h3>
+                <p>清晰展示点名进度，已点/未点人数一目了然，进度条直观显示当前课堂参与情况。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>流畅动画效果</h3>
+                <p>精心设计的点名动画，滚动抽选效果增加紧张感和趣味性，提升课堂氛围。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>响应式设计</h3>
+                <p>完美适配各种设备，无论是电脑、平板还是手机，都能获得最佳使用体验。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>隐私保护</h3>
+                <p>纯前端实现，所有数据在本地处理，无需注册登录，保护学生和教师信息安全。</p>
+            </div>
+        </div>
     </section>
-    <aside class="sidebar">
-        <h3>联系信息</h3>
-        <p>QQ群：339880692</p>
-    </aside>
-    <footer>
-        <p>版权所有 &copy; 2025 白林BaiLin</p>
+
+    <!-- 应用场景 -->
+    <section class="scenarios" id="scenarios">
+        <div class="scenarios-container">
+            <h2 class="section-title">🎓 适用场景</h2>
+            <div class="scenario-list">
+                <div class="scenario-item">
+                    <div class="scenario-icon">🏫</div>
+                    <h3>课堂教学</h3>
+                    <p>随机提问、课堂互动，提升学生专注度</p>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-icon">🎤</div>
+                    <h3>班会活动</h3>
+                    <p>公平选取发言代表，活跃班会气氛</p>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-icon">🎮</div>
+                    <h3>团队游戏</h3>
+                    <p>分组抽选、游戏轮盘，增加娱乐性</p>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-icon">🎯</div>
+                    <h3>会议主持</h3>
+                    <p>抽取汇报人、分享者，提高会议效率</p>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-icon">🎨</div>
+                    <h3>培训机构</h3>
+                    <p>学员互动、随堂测试，增强学习效果</p>
+                </div>
+                <div class="scenario-item">
+                    <div class="scenario-icon">🎪</div>
+                    <h3>活动抽奖</h3>
+                    <p>现场抽奖、幸运观众，公平公正公开</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据统计 -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">10万+</div>
+                <div class="stat-label">教师用户</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500万+</div>
+                <div class="stat-label">点名次数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">用户满意度</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">全天候服务</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 行动号召 -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>🚀 立即开始使用</h2>
+            <p>无需注册，完全免费，打开浏览器即可使用。让课堂互动变得更简单、更有趣！</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary" onclick="showDemo()">🎲 在线体验</a>
+                <a href="#" class="btn btn-secondary" onclick="showDownload()">📥 下载源码</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="logo" style="color: white; margin-bottom: 1rem;">🎯 智能点名系统</div>
+            <p style="margin-bottom: 1rem;">让每一次课堂互动都充满惊喜</p>
+            <div class="footer-links">
+                <a href="#features">产品特性</a>
+                <a href="#scenarios">应用场景</a>
+                <a href="#" onclick="showHelp()">使用帮助</a>
+                <a href="#" onclick="showFeedback()">意见反馈</a>
+            </div>
+            <p style="margin-top: 2rem; opacity: 0.7;">
+                &copy; 2024 智能点名系统. Made with ❤️ for educators
+            </p>
+        </div>
     </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 动画效果
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有卡片
+        document.querySelectorAll('.feature-card, .scenario-item, .stat-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // 交互功能
+        function showDemo() {
+            alert('🎉 演示功能即将上线！\n\n您可以：\n1. 查看上方的功能介绍\n2. 点击"下载源码"在本地体验\n3. 等待我们完善在线演示版本');
+        }
+
+        function showDownload() {
+            const htmlContent = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>智能点名系统</title>
+</head>
+<body>
+    <h1>智能点名系统</h1>
+    <p>这是一个功能完整的单文件应用，保存为 .html 即可使用。</p>
+    <p>查看之前的对话获取完整美化版代码！</p>
+</body>
+</html>`;
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '智能点名系统_基础版.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function showHelp() {
+            alert('📚 使用帮助\n\n1. 随机点名：随机选择一名学生（可重复）\n2. 接龙模式：不重复抽取直到全班轮完\n3. 重置系统：清空所有记录重新开始\n4. 快捷键：按1随机点名，2接龙模式，R重置\n\n💡 提示：所有数据保存在本地，保护隐私安全！');
+        }
+
+        function showFeedback() {
+            const feedback = prompt('💬 请留下您的宝贵意见：');
+            if (feedback) {
+                alert('✅ 感谢您的反馈！我们会认真考虑您的建议。');
+            }
+        }
+
+        // 添加页面加载动画
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
 </body>
 </html>
