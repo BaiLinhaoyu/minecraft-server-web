@@ -490,7 +490,7 @@
                 <h1>让课堂互动 <span class="highlight">更有趣</span></h1>
                 <p>智能随机点名系统，告别传统点名方式，让每一次课堂互动都充满惊喜与公平。支持随机抽取、接龙模式、实时统计等功能。</p>
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary" onclick="showDemo()">🚀 免费试用</a>
+                    <a href="https://github.com/BaiLinhaoyu/minecraft-server-web/blob/main/nmnm.html" class="btn btn-primary" target="_blank">🚀 免费试用</a>
                     <a href="#features" class="btn btn-secondary">📖 了解详情</a>
                 </div>
             </div>
@@ -585,7 +585,7 @@
         </div>
     </section>
 
-    <!-- 数据统计 -->
+    <!-- 统计数据 -->
     <section class="stats-section">
         <div class="stats-grid">
             <div class="stat-item">
@@ -613,7 +613,7 @@
             <h2>🚀 立即开始使用</h2>
             <p>无需注册，完全免费，打开浏览器即可使用。让课堂互动变得更简单、更有趣！</p>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-primary" onclick="showDemo()">🎲 在线体验</a>
+                <a href="https://github.com/BaiLinhaoyu/minecraft-server-web/blob/main/nmnm.html" class="btn btn-primary" target="_blank">🎲 在线体验</a>
                 <a href="#" class="btn btn-secondary" onclick="showDownload()">📥 下载源码</a>
             </div>
         </div>
@@ -685,31 +685,10 @@
         });
 
         // 交互功能
-        function showDemo() {
-            alert('🎉 演示功能即将上线！\n\n您可以：\n1. 查看上方的功能介绍\n2. 点击"下载源码"在本地体验\n3. 等待我们完善在线演示版本');
-        }
-
         function showDownload() {
-            const htmlContent = `<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>智能点名系统</title>
-</head>
-<body>
-    <h1>智能点名系统</h1>
-    <p>这是一个功能完整的单文件应用，保存为 .html 即可使用。</p>
-    <p>查看之前的对话获取完整美化版代码！</p>
-</body>
-</html>`;
-            
-            const blob = new Blob([htmlContent], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = '智能点名系统_基础版.html';
-            a.click();
-            URL.revokeObjectURL(url);
+            alert('📥 源码下载\n\n您可以直接访问：\nhttps://github.com/BaiLinhaoyu/minecraft-server-web\n\n下载nmnm.html文件即可使用！');
+            // 或者可以直接打开GitHub页面
+            window.open('https://github.com/BaiLinhaoyu/minecraft-server-web', '_blank');
         }
 
         function showHelp() {
