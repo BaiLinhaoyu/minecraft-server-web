@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎲 2023级三班智能点名系统</title>
+    <title>落幕曲 - 整合包服务器</title>
     <style>
         * {
             margin: 0;
@@ -12,490 +12,466 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 100%;
-            padding: 40px;
-            animation: slideIn 0.6s ease-out;
+            border-bottom: 4px solid #9b59b6;
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .server-logo {
+            width: 120px;
+            height: 120px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%239b59b6" x="10" y="10" width="80" height="80" rx="15"/><text x="50" y="65" font-family="Arial" font-size="35" fill="%23fff" text-anchor="middle" font-weight="bold">落</text></svg>');
+            background-size: contain;
+            margin: 0 auto 20px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        h1 {
-            font-size: 2.8rem;
-            background: linear-gradient(90deg, #4a90e2, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .server-name {
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
             margin-bottom: 10px;
-            text-align: center;
+            letter-spacing: 2px;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
+        .pack-name {
+            font-size: 1.3em;
+            color: #3498db;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
-        .student-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 12px;
-            max-height: 400px;
-            overflow-y: auto;
+        .server-ip {
+            font-size: 1.5em;
+            color: #9b59b6;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #9b59b6;
+        }
+
+        .server-ip:hover {
+            background: #9b59b6;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* 服务器状态 */
+        .status-bar {
+            background: rgba(0, 0, 0, 0.6);
             padding: 20px;
-            background: #f8f9ff;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 2px solid #e1e8ff;
-        }
-
-        .student-item {
-            background: white;
-            padding: 12px;
-            border-radius: 10px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 500;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
         }
 
-        .student-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ecc71;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
         }
 
-        .student-item.selected {
-            background: linear-gradient(135deg, #ff7b7b, #ff5252);
-            color: white;
-            transform: scale(0.95);
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
-        .student-item.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 2px;
-            right: 6px;
-            font-size: 0.8rem;
+        .online-count {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #f39c12;
         }
 
-        .controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 25px;
+        /* 主容器 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        .btn {
-            padding: 14px 28px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
+        /* 特色功能卡片 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(155, 89, 182, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #9b59b6;
+            box-shadow: 0 10px 30px rgba(155, 89, 182, 0.3);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #9b59b6;
+            border-radius: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4a90e2, #5ca0f2);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #ff7b7b, #ff5252);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 123, 123, 0.4);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #56ab2f, #a8e063);
-            color: white;
-        }
-
-        .result-section {
-            text-align: center;
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
+            font-size: 30px;
         }
 
-        .result {
-            font-size: 2.2rem;
+        .feature-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #9b59b6;
+        }
+
+        .feature-desc {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* 游戏模式 */
+        .game-modes {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .mode-card {
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.8), rgba(44, 62, 80, 0.9));
+            border-radius: 15px;
+            padding: 30px;
+            border: 2px solid rgba(155, 89, 182, 0.3);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .mode-card:hover {
+            border-color: #9b59b6;
+            transform: scale(1.03);
+        }
+
+        .mode-name {
+            font-size: 1.5em;
+            color: #9b59b6;
+            margin-bottom: 10px;
             font-weight: bold;
-            color: #ff5252;
-            margin: 15px 0;
-            animation: bounce 0.6s ease;
-            text-shadow: 0 2px 10px rgba(255, 82, 82, 0.3);
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
-        }
-
-        .status {
-            font-size: 1.1rem;
-            color: #666;
+        .mode-version {
+            font-size: 0.9em;
+            opacity: 0.7;
             margin-bottom: 15px;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 10px;
+        /* 加入指南 */
+        .join-guide {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 60px;
+            text-align: center;
+            border: 2px solid rgba(155, 89, 182, 0.5);
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4a90e2, #56ab2f);
-            transition: width 0.5s ease;
-            border-radius: 4px;
-        }
-
-        .stats {
+        .guide-steps {
             display: flex;
             justify-content: space-around;
-            margin-top: 20px;
-            padding: 15px;
-            background: #f0f4ff;
-            border-radius: 10px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 20px;
         }
 
-        .stat-item {
-            text-align: center;
+        .step {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
         }
 
-        .stat-number {
-            font-size: 1.8rem;
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #9b59b6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5em;
             font-weight: bold;
-            color: #4a90e2;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
+        /* 社区链接 */
+        .community {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .history {
-            margin-top: 20px;
-            max-height: 100px;
-            overflow-y: auto;
-            padding: 10px;
-            background: #fafafa;
-            border-radius: 8px;
-            font-size: 0.9rem;
+        .community-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
         }
 
-        .history-item {
-            display: inline-block;
-            background: #e3f2fd;
-            padding: 4px 8px;
-            margin: 3px;
-            border-radius: 12px;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            .container {
-                padding: 20px;
-            }
-            .btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            .student-grid {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            }
-        }
-
-        /* 滚动条美化 */
-        .student-grid::-webkit-scrollbar {
-            width: 8px;
-        }
-        .student-grid::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        .community-btn {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #9b59b6;
+            color: #fff;
+            text-decoration: none;
             border-radius: 10px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1em;
         }
-        .student-grid::-webkit-scrollbar-thumb {
-            background: #4a90e2;
-            border-radius: 10px;
+
+        .community-btn:hover {
+            background: #9b59b6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 3px solid #9b59b6;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .server-name {
+                font-size: 2em;
+            }
+            
+            .server-ip {
+                font-size: 1.2em;
+                padding: 8px 20px;
+            }
+            
+            .section-title {
+                font-size: 2em;
+            }
+        }
+
+        /* 粒子背景效果 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(155, 89, 182, 0.5);
+            border-radius: 50%;
+            animation: float-particle 15s infinite linear;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎲 2023级三班智能点名系统</h1>
-        <p class="subtitle">让课堂互动变得更加有趣高效</p>
+    <!-- 粒子背景 -->
+    <div class="particles" id="particles"></div>
 
-        <div class="student-grid" id="studentGrid">
-            <!-- 学生名单将通过JS动态生成 -->
-        </div>
+    <!-- 头部 -->
+    <header class="header">
+        <div class="server-logo"></div>
+        <h1 class="server-name">落幕曲</h1>
+        <p class="pack-name">Minecraft服务器</p>
+        <div class="server-ip" onclick="copyIP()">bailin-mc.cn:11610</div>
+    </header>
 
-        <div class="controls">
-            <button class="btn btn-primary" onclick="randomCall()">
-                <span>🎯</span> 随机点名
-            </button>
-            <button class="btn btn-secondary" onclick="relayCall()">
-                <span>🔄</span> 接龙模式
-            </button>
-            <button class="btn btn-success" onclick="resetAll()">
-                <span>♻️</span> 重置系统
-            </button>
-        </div>
-
-        <div class="result-section">
-            <div class="status" id="status">准备就绪</div>
-            <div class="result" id="result">点击按钮开始点名</div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalStudents">46</div>
-                    <div class="stat-label">总人数</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="calledCount">0</div>
-                    <div class="stat-label">已点名</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="remainingCount">46</div>
-                    <div class="stat-label">未点名</div>
-                </div>
-            </div>
-
-            <div class="history" id="history" style="display: none;">
-                <strong>📋 点名历史：</strong>
-                <div id="historyList"></div>
-            </div>
-        </div>
+    <!-- 服务器状态栏 -->
+    <div class="status-bar">
+        <span class="status-indicator"></span>
+        <span>服务器状态：<strong>在线</strong></span>
+        <span style="margin: 0 20px;">|</span>
+        <span class="online-count">在线玩家：1/50</span>
+        <span style="margin: 0 20px;">|</span>
+        <span>版本：1.20.1</span>
     </div>
 
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 特色功能 -->
+        <section class="features">
+
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3 class="feature-title">自由建造</h3>
+                <p class="feature-desc">在整合包的世界中自由探索与建造，创造属于你的杰作！</p>
+            </div>
+        </section>
+
+        <!-- 游戏模式 -->
+        <section class="game-modes">
+            <h2 class="section-title">🎮 游戏模式</h2>
+            <div class="mode-grid">
+                <div class="mode-card">
+                    <h3 class="mode-name">整合包生存</h3>
+                    <p class="mode-version">版本: 1.20.1</p>
+                    <p>在丰富的mod支持下体验全新生存玩法，探索未知科技魔法世界！</p>
+                </div>
+                <div class="mode-card">
+                    <h3 class="mode-name">合作建造</h3>
+                    <p class="mode-version">版本: 1.20.1</p>
+                    <p>与好友联机合作，利用mod工具共同打造宏伟建筑！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 加入指南 -->
+        <section class="join-guide">
+            <h2 class="section-title">🚀 如何加入</h2>
+            <div class="guide-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>安装整合包</h3>
+                    <p>下载并安装"落幕曲"整合包</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>启动游戏</h3>
+                    <p>启动Minecraft，版本1.20.1</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>添加服务器</h3>
+                    <p>点击"多人游戏" → "添加服务器"</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>输入地址</h3>
+                    <p>服务器地址: bailin-mc.cn:11610</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 社区链接 -->
+        <section class="community">
+            <h2 class="section-title">👥 加入社区</h2>
+            <p style="margin-bottom: 20px; opacity: 0.9;">获取整合包下载链接，与其他玩家交流！</p>
+            <div class="community-links">
+                <a href="#" class="community-btn">
+                    <span>🐧</span> QQ群: 339880692
+                </a>
+                <a href="#" class="community-btn">
+                    <span>📥</span> 整合包下载
+                </a>
+                <a href="#" class="community-btn">
+                    <span>📺</span> 哔哩哔哩
+                </a>
+                <a href="#" class="community-btn">
+                    <span>🎁</span> 捐赠支持
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>&copy; </p>
+        <p style="margin-top: 10px; opacity: 0.7;">本服务器与Mojang工作室无任何关联</p>
+    </footer>
+
     <script>
-        // 学生数据
-        const studentData = [
-            '白林浩宇', '蔡嘉博', '陈弘逸', '陈康睿', '陈瑞啸', '陈欣怡', '陈子馨',
-            '方宏源', '范展睿', '黄子玮', '孔轩豪', '林俊伊', '李拉缇', '李文宇',
-            '孙唯溪', '王宏睿', '王璟', '王珺一', '王苛静', '王湤淇', '王馨怡',
-            '王奕翔', '王宥涵', '吴力烨', '项佳雯', '项经毅', '项洛勋', '谢佳璇',
-            '杨子淇', '叶恩宇', '余星墨', '章涵亮', '张皓轩', '张铭轩', '张珉铭',
-            '张启恒', '张荣轩', '张思瑶', '章寅轩', '张哲云', '周丞烨', '周梦洁',
-            '周伊', '周子予', '朱颂扬', '朱振瑜'
-        ];
-
-        let selectedStudents = [];
-        let callHistory = [];
-        let isRunning = false;
-
-        // 初始化学生网格
-        function initializeStudents() {
-            const grid = document.getElementById('studentGrid');
-            grid.innerHTML = '';
-            studentData.forEach((name, index) => {
-                const item = document.createElement('div');
-                item.className = 'student-item';
-                item.textContent = name;
-                item.dataset.index = index;
-                grid.appendChild(item);
-            });
-            updateStats();
-        }
-
-        // 更新统计信息
-        function updateStats() {
-            const total = studentData.length;
-            const called = selectedStudents.length;
-            const remaining = total - called;
-            
-            document.getElementById('totalStudents').textContent = total;
-            document.getElementById('calledCount').textContent = called;
-            document.getElementById('remainingCount').textContent = remaining;
-            
-            // 更新进度条
-            const progress = (called / total) * 100;
-            document.getElementById('progressFill').style.width = progress + '%';
-            
-            // 显示/隐藏历史记录
-            const historyDiv = document.getElementById('history');
-            historyDiv.style.display = callHistory.length > 0 ? 'block' : 'none';
-        }
-
-        // 更新学生网格显示状态
-        function updateStudentGrid() {
-            const items = document.querySelectorAll('.student-item');
-            items.forEach(item => {
-                if (selectedStudents.includes(item.textContent)) {
-                    item.classList.add('selected');
-                } else {
-                    item.classList.remove('selected');
-                }
+        // 复制服务器IP
+        function copyIP() {
+            const ip = 'bailin-mc.cn:11610';
+            navigator.clipboard.writeText(ip).then(() => {
+                alert('服务器地址已复制到剪贴板！');
+            }).catch(() => {
+                alert('复制失败，请手动复制：bailin-mc.cn:11610');
             });
         }
 
-        // 随机点名
-        function randomCall() {
-            if (isRunning) return;
-            
-            isRunning = true;
-            const available = studentData.filter(s => !selectedStudents.includes(s));
-            
-            if (available.length === 0) {
-                document.getElementById('result').textContent = '所有学生都已点过名了！';
-                document.getElementById('status').textContent = '接龙模式完成';
-                isRunning = false;
-                return;
+        // 生成粒子背景
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(particle);
             }
-
-            // 动画效果
-            let count = 0;
-            const animInterval = setInterval(() => {
-                const random = studentData[Math.floor(Math.random() * studentData.length)];
-                document.getElementById('result').textContent = random;
-                count++;
-                if (count > 15) {
-                    clearInterval(animInterval);
-                    const finalStudent = available[Math.floor(Math.random() * available.length)];
-                    selectedStudents.push(finalStudent);
-                    callHistory.push(finalStudent);
-                    
-                    document.getElementById('result').textContent = finalStudent;
-                    document.getElementById('status').textContent = '随机点名结果';
-                    
-                    updateStats();
-                    updateStudentGrid();
-                    updateHistory();
-                    isRunning = false;
-                }
-            }, 80);
         }
 
-        // 接龙模式
-        function relayCall() {
-            if (isRunning) return;
-            
-            if (selectedStudents.length === studentData.length) {
-                document.getElementById('result').textContent = '所有学生都已被抽选过！';
-                document.getElementById('status').textContent = '接龙完成 🎉';
-                return;
-            }
-
-            isRunning = true;
-            const available = studentData.filter(s => !selectedStudents.includes(s));
-            const randomStudent = available[Math.floor(Math.random() * available.length)];
-            
-            // 添加动画效果
-            let count = 0;
-            const animInterval = setInterval(() => {
-                const temp = available[Math.floor(Math.random() * available.length)];
-                document.getElementById('result').textContent = temp;
-                count++;
-                if (count > 10) {
-                    clearInterval(animInterval);
-                    selectedStudents.push(randomStudent);
-                    callHistory.push(randomStudent);
-                    
-                    document.getElementById('result').textContent = randomStudent;
-                    document.getElementById('status').textContent = `接龙点名 - 第 ${selectedStudents.length} 位`;
-                    
-                    updateStats();
-                    updateStudentGrid();
-                    updateHistory();
-                    isRunning = false;
-                }
-            }, 100);
+        // 模拟在线人数更新
+        function updateOnlineCount() {
+            const count = document.querySelector('.online-count');
+            const current = parseInt(count.textContent.match(/\d+/)[0]);
+            const change = Math.floor(Math.random() * 3) - 1;
+            const newCount = Math.max(0, Math.min(50, current + change));
+            count.textContent = `在线玩家：${newCount}/50`;
         }
 
-        // 更新历史记录
-        function updateHistory() {
-            const historyList = document.getElementById('historyList');
-            historyList.innerHTML = callHistory.map((name, index) => 
-                `<span class="history-item">${index + 1}. ${name}</span>`
-            ).join('');
-        }
-
-        // 重置系统
-        function resetAll() {
-            selectedStudents = [];
-            callHistory = [];
-            document.getElementById('result').textContent = '点击按钮开始点名';
-            document.getElementById('status').textContent = '准备就绪';
-            
-            updateStats();
-            updateStudentGrid();
-            updateHistory();
-            
-            // 重置动画
-            document.querySelector('.container').style.animation = 'none';
-            setTimeout(() => {
-                document.querySelector('.container').style.animation = 'slideIn 0.6s ease-out';
-            }, 10);
-        }
-
-        // 键盘快捷键
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '1') randomCall();
-            if (e.key === '2') relayCall();
-            if (e.key === 'r' || e.key === 'R') resetAll();
+        // 页面加载完成后执行
+        window.addEventListener('load', () => {
+            createParticles();
+            // 每10秒更新一次在线人数
+            setInterval(updateOnlineCount, 10000);
         });
-
-        // 初始化
-        initializeStudents();
     </script>
 </body>
 </html>
