@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>化学物质分类复习提纲_浙教版_白林不可燃</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+                height: auto;
+                overflow: visible;
+            }
+            .tree-node {
+                page-break-inside: avoid;
+            }
+            .children {
+                max-height: none !important;
+                overflow: visible !important;
+                opacity: 1 !important;
+            }
+            .level-0 > .children {
+                max-height: none !important;
+            }
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 210mm;
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            padding: 2cm;
+            position: relative;
+            overflow: visible;
+        }
+        
+        .title-section {
+            font-family: 'Noto Serif SC', serif;
+            border-bottom: 3px solid #1e40af;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tree-container {
+            position: relative;
+        }
+        
+        .tree-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+        }
+        
+        .tree-node {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tree-node::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            width: 1.5rem;
+            height: 2px;
+            background: #cbd5e1;
+        }
+        
+        .tree-node::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: -0.5rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        
+        .tree-node:last-child::after {
+            display: none;
+        }
+        
+        .node-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            position: relative;
+            z-index: 10;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+        
+        .node-header:hover {
+            background: #f1f5f9;
+            transform: translateX(4px);
+        }
+        
+        .node-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .node-icon.expanded {
+            transform: rotate(90deg);
+        }
+        
+        .level-0 .node-header {
+            font-size: 1.25rem;
+            color: #1e40af;
+            background: linear-gradient(90deg, #dbeafe 0%, transparent 100%);
+            border-left: 4px solid #1e40af;
+        }
+        
+        .level-1 .node-header {
+            font-size: 1.1rem;
+            color: #0369a1;
+            background: linear-gradient(90deg, #e0f2fe 0%, transparent 100%);
+            border-left: 3px solid #0ea5e9;
+        }
+        
+        .level-2 .node-header {
+            font-size: 1rem;
+            color: #0f766e;
+            background: linear-gradient(90deg, #ccfbf1 0%, transparent 100%);
+            border-left: 2px solid #14b8a6;
+        }
+        
+        .level-3 .node-header {
+            font-size: 0.95rem;
+            color: #7c3aed;
+            font-weight: 500;
+        }
+        
+        .level-4 {
+            font-size: 0.9rem;
+            color: #475569;
+            padding-left: 3rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .children {
+            overflow: visible;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+            max-height: none;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .children.collapsed {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .tag-red { background: #fee2e2; color: #991b1b; }
+        .tag-blue { background: #dbeafe; color: #1e40af; }
+        .tag-green { background: #dcfce7; color: #166534; }
+        .tag-purple { background: #f3e8ff; color: #7c3aed; }
+        .tag-orange { background: #ffedd5; color: #9a3412; }
+        .tag-pink { background: #fce7f3; color: #be185d; }
+        .tag-indigo { background: #e0e7ff; color: #3730a3; }
+        
+        .formula {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            background: #f8fafc;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .exam-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 4px solid #dc2626;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .reaction-equation {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            font-family: 'Courier New', monospace;
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 5;
+            font-weight: 600;
+            color: #166534;
+        }
+        
+        .control-panel {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .search-box {
+            padding: 0.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            width: 200px;
+            font-size: 0.875rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .search-box:focus {
+            border-color: #3b82f6;
+        }
+        
+        .match-highlight {
+            background: #fef08a;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+        
+        .zj-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.5rem;
+            background: #dc2626;
+            color: white;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .hs-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.5rem;
+            background: #4f46e5;
+            color: white;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+        
+        @media (max-width: 900px) {
+            .page-container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 1rem;
+            }
+            .control-panel {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 1rem;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="control-panel no-print">
+        <input type="text" class="search-box" placeholder="搜索知识点..." id="searchInput">
+        <button class="control-btn bg-blue-500 text-white" onclick="expandAll()">
+            <span>📖</span> 全部展开
+        </button>
+        <button class="control-btn bg-gray-500 text-white" onclick="collapseAll()">
+            <span>📕</span> 全部折叠
+        </button>
+        <button class="control-btn bg-green-500 text-white" onclick="window.print()">
+            <span>🖨️</span> 打印/保存PDF
+        </button>
+    </div>
+
+    <div class="page-container">
+        <div class="title-section">
+            <h1 class="text-3xl font-bold text-gray-800">化学物质分类复习提纲</h1>
+            <p class="text-gray-600 mt-2">浙教版《科学》适配 · 初中重点+高中拓展_白林不可燃&Kimi</p>
+            <div class="flex gap-2 mt-3 text-sm flex-wrap">
+                <span class="zj-badge">浙江中考</span>
+                <span class="tag tag-blue">氧化物</span>
+                <span class="tag tag-green">酸碱盐</span>
+                <span class="tag tag-purple">金属</span>
+                <span class="hs-badge">高中拓展</span>
+            </div>
+        </div>
+
+        <div class="tree-container">
+            <div class="tree-line"></div>
+            
+            <!-- 氧气分支 - 新增详细内容 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>氧气 O₂</span>
+                    <span class="tag tag-blue">非金属单质</span>
+                    <span class="zj-badge">中考必考</span>
+                </div>
+                <div class="children">
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>物理性质（详细）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div>• <strong>颜色状态：</strong>通常状况下为无色、无味的气体</div>
+                            <div>• <strong>密度：</strong>比空气略大（相对分子质量32 > 空气29），因此可用向上排空气法收集</div>
+                            <div>• <strong>溶解性：</strong>不易溶于水（1L水约溶30mL O₂），因此可用排水法收集，且比用排空气法收集的更纯净</div>
+                            <div>• <strong>三态变化：</strong>降温加压可变为淡蓝色液体（液氧，-183°C）或淡蓝色雪花状固体（固氧，-218°C）</div>
+                            <div>• <strong>工业储存：</strong>通常加压贮存在蓝色钢瓶中（液氧）</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>化学性质（比较活泼，支持燃烧，供给呼吸）</span>
+                            <span class="zj-badge">高频实验</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>与非金属反应（燃烧现象对比）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>1. 木炭（碳）燃烧：</strong>
+                                        <div class="reaction-equation">C + O₂ = CO₂（点燃，充分燃烧）</div>
+                                        <div>• <strong>空气中：</strong>持续红热，放出热量，生成能使澄清石灰水变浑浊的气体</div>
+                                        <div>• <strong>氧气中：</strong>剧烈燃烧，发出<strong>白光</strong>，放出大量的热，生成能使澄清石灰水变浑浊的气体</div>
+                                        <div>• <strong>注意：</strong>若氧气不足，不充分燃烧：2C + O₂ = 2CO（点燃）</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>2. 硫燃烧（现象对比明显，中考高频）：</strong>
+                                        <div class="reaction-equation">S + O₂ = SO₂（点燃）</div>
+                                        <div>• <strong>空气中：</strong>发出微弱的<strong>淡蓝色火焰</strong>，放出热量，生成有刺激性气味的气体</div>
+                                        <div>• <strong>氧气中：</strong>发出明亮的<strong>蓝紫色火焰</strong>，放出大量的热，生成有刺激性气味的气体</div>
+                                        <div>• <strong>注意：</strong>集气瓶底要放少量水或氢氧化钠溶液，吸收SO₂防止污染空气（SO₂有毒，形成酸雨）</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>3. 红磷（白磷）燃烧（测定空气中氧气含量实验）：</strong>
+                                        <div class="reaction-equation">4P + 5O₂ = 2P₂O₅（点燃）</div>
+                                        <div>• <strong>现象：</strong>产生大量<strong>白烟</strong>（五氧化二磷固体小颗粒），放出大量的热，生成白色固体</div>
+                                        <div>• <strong>注意：</strong>是"白烟"（固体）不是"白雾"（液体）；P₂O₅有毒，实验需在密闭容器中进行</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>4. 氢气燃烧（清洁能源）：</strong>
+                                        <div class="reaction-equation">2H₂ + O₂ = 2H₂O（点燃）</div>
+                                        <div>• <strong>现象：</strong>产生<strong>淡蓝色火焰</strong>，放出大量的热，烧杯内壁有水珠生成（火焰上方罩干冷烧杯）</div>
+                                        <div>• <strong>注意：</strong>点燃前必须验纯（爆鸣声），否则可能爆炸</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>与金属反应（剧烈氧化，中考重点实验）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>1. 铁丝燃烧（中考必考实验，现象剧烈）：</strong>
+                                        <div class="reaction-equation">3Fe + 2O₂ = Fe₃O₄（点燃）</div>
+                                        <div>• <strong>现象：</strong>剧烈燃烧，<strong>火星四射</strong>，放出大量的热，生成<strong>黑色固体</strong>（四氧化三铁）</div>
+                                        <div>• <strong>操作要点：</strong>①铁丝绕成螺旋状（增大受热面积，聚集热量）；②末端系一根火柴（引燃）；③待火柴快燃尽时再伸入集气瓶（防止火柴燃烧消耗过多氧气）；④瓶底放<strong>少量水或细沙</strong>（防止高温熔融物溅落炸裂瓶底）</div>
+                                        <div>• <strong>注意：</strong>铁丝在空气中不能燃烧，只能烧至红热；铁丝表面若有铁锈需用砂纸打磨除去</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>2. 镁条燃烧（耀眼白光）：</strong>
+                                        <div class="reaction-equation">2Mg + O₂ = 2MgO（点燃）</div>
+                                        <div>• <strong>现象：</strong>发出<strong>耀眼的白光</strong>，放出大量的热，生成<strong>白色固体</strong>（氧化镁），冒白烟</div>
+                                        <div>• <strong>应用：</strong>制照明弹、闪光粉、焰火（利用其耀眼白光）</div>
+                                        <div>• <strong>注意：</strong>镁在空气中即可燃烧，氧气中更剧烈；不要直视强光以免损伤眼睛</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>3. 铝燃烧（高中拓展）：</strong>
+                                        <div class="reaction-equation">4Al + 3O₂ = 2Al₂O₃（点燃）</div>
+                                        <div>• <strong>现象：</strong>剧烈燃烧，发出<strong>耀眼的白光</strong>，放出大量的热，生成<strong>白色固体</strong></div>
+                                        <div>• <strong>注意：</strong>铝在空气中表面有氧化膜阻碍，需打磨或高温点燃；氧气中燃烧更剧烈</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>4. 铜与氧气（加热，缓慢氧化）：</strong>
+                                        <div class="reaction-equation">2Cu + O₂ = 2CuO（加热）</div>
+                                        <div>• <strong>现象：</strong>紫红色固体表面逐渐变为<strong>黑色</strong>（生成氧化铜）</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>与化合物反应（一氧化碳、甲烷等）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>1. 一氧化碳燃烧（蓝色火焰）：</strong>
+                                        <div class="reaction-equation">2CO + O₂ = 2CO₂（点燃）</div>
+                                        <div>• <strong>现象：</strong>产生<strong>蓝色火焰</strong>，放出大量的热，生成能使澄清石灰水变浑浊的气体</div>
+                                        <div>• <strong>注意：</strong>CO有毒，点燃前需验纯，尾气需处理</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>2. 甲烷（天然气）燃烧：</strong>
+                                        <div class="reaction-equation">CH₄ + 2O₂ = CO₂ + 2H₂O（点燃）</div>
+                                        <div>• <strong>现象：</strong>产生明亮的蓝色火焰，放出大量的热，烧杯内壁有水珠生成，倒入澄清石灰水变浑浊</div>
+                                        <div>• <strong>注意：</strong>点燃前必须验纯（防止爆炸）</div>
+                                    </div>
+                                    <div class="highlight-box">
+                                        <strong>氧化反应总结：</strong>物质与氧发生的反应叫做氧化反应。氧气在氧化反应中提供氧，具有<strong>氧化性</strong>（助燃性），是一种常用的氧化剂。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>氧气的制备方法（详细）</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>实验室制法（化学变化，中考必考三大方法）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>方法一：加热高锰酸钾（KMnO₄，传统方法，装置较复杂）</strong>
+                                        <div class="reaction-equation">2KMnO₄ = K₂MnO₄ + MnO₂ + O₂↑（加热，Δ）</div>
+                                        <div>• <strong>药品：</strong>暗紫色（紫黑色）固体高锰酸钾</div>
+                                        <div>• <strong>装置：</strong>固体加热型（试管口略向下倾斜，防止冷凝水倒流炸裂试管）</div>
+                                        <div>• <strong>操作要点：</strong>①试管口塞一团棉花（防止KMnO₄粉末进入导管堵塞或污染水槽）；②铁夹夹在距试管口约1/3处；③先预热后集中加热；④实验结束时先将导管移出水面再熄灭酒精灯（防止水倒吸炸裂试管）</div>
+                                        <div>• <strong>收集：</strong>排水法（较纯净）或向上排空气法</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>方法二：分解过氧化氢（H₂O₂，双氧水，常温进行，装置简单，推荐方法）</strong>
+                                        <div class="reaction-equation">2H₂O₂ = 2H₂O + O₂↑（MnO₂催化）</div>
+                                        <div>• <strong>药品：</strong>过氧化氢溶液（双氧水，无色液体，通常6%浓度）和二氧化锰（黑色固体催化剂）</div>
+                                        <div>• <strong>装置：</strong>固液不加热型（锥形瓶/试管 + 长颈漏斗/分液漏斗）</div>
+                                        <div>• <strong>催化剂（MnO₂）：</strong>"一变两不变"——改变化学反应速率（加快），本身的质量和化学性质在反应前后不变</div>
+                                        <div>• <strong>操作：</strong>可通过分液漏斗控制滴加速度，从而控制反应速率；也可用注射器代替</div>
+                                        <div>• <strong>优点：</strong>节能（不需加热）、环保（产物只有水和氧气）、操作简便、可控性强</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>方法三：加热氯酸钾和二氧化锰混合物（KClO₃，较少用，了解）</strong>
+                                        <div class="reaction-equation">2KClO₃ = 2KCl + 3O₂↑（MnO₂催化，加热）</div>
+                                        <div>• <strong>注意：</strong>MnO₂是催化剂，加快反应速率但质量和化学性质不变；反应需加热，装置同KMnO₄法但试管口<strong>不需</strong>塞棉花</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>工业制法（物理变化，分离液态空气法）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>原理：</strong>利用液态氮（沸点-196°C）和液态氧（沸点-183°C）的沸点不同，通过<strong>蒸发液态空气</strong>分离（氮气先蒸发，剩余主要是液氧）</div>
+                                    <div>• <strong>过程：</strong>空气净化 → 加压降温液化 → 蒸发分离（氮气沸点低先蒸发）→ 获得液氧（贮存在蓝色钢瓶中）</div>
+                                    <div>• <strong>变化类型：</strong><strong>物理变化</strong>（无新物质生成，只是状态变化和分离）</div>
+                                    <div>• <strong>储存：</strong>加压贮存在蓝色钢瓶中，便于运输和使用</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>检验、验满与收集方法（中考操作必考）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>1. 检验方法（证明是氧气）：</strong>
+                                <div>将<strong>带火星的木条</strong>伸入集气瓶<strong>内</strong>，若木条复燃，则证明是氧气</div>
+                                <div>• <strong>原理：</strong>氧气支持燃烧，浓度越高燃烧越旺</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>2. 验满方法（证明已收集满）：</strong>
+                                <div>• <strong>向上排空气法：</strong>将带火星的木条放在集气瓶<strong>口</strong>，若木条复燃，则证明已收集满</div>
+                                <div>• <strong>排水法：</strong>当集气瓶口有大气泡向外冒出时，证明已收集满（或瓶内水已排尽）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>3. 收集方法选择：</strong>
+                                <div>• <strong>排水法：</strong>因为O₂不易溶于水，且不与水反应；此法收集的氧气较纯净（但含有水蒸气）</div>
+                                <div>• <strong>向上排空气法：</strong>因为O₂密度比空气大；此法收集的氧气较干燥（但可能混有空气，纯度稍低）</div>
+                                <div>• <strong>最佳组合：</strong>如需干燥氧气，先排水法收集再干燥；或向上排空气法+干燥剂</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>用途与氧化反应类型</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>1. 供给呼吸（生物必需）：</strong>
+                                <div>• 医疗急救（氧气瓶、呼吸机）</div>
+                                <div>• 潜水（氧气瓶）</div>
+                                <div>• 登山（高原缺氧）、航空（飞行员）、航天（宇宙飞船）</div>
+                                <div>• 动植物呼吸作用：C₆H₁₂O₆ + 6O₂ = 6CO₂ + 6H₂O + 能量（酶催化）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>2. 支持燃烧（助燃性，非可燃性）：</strong>
+                                <div>• 炼钢（提高炉温，使生铁中碳充分燃烧降低含碳量）</div>
+                                <div>• 气焊、气割（乙炔在氧气中燃烧产生高温火焰，3000°C以上）</div>
+                                <div>• 液氧炸药（采矿）</div>
+                                <div>• 火箭推进剂（液氢+液氧）</div>
+                            </div>
+                            <div class="highlight-box">
+                                <strong>氧化反应分类（从剧烈程度）：</strong>
+                                <div>• <strong>剧烈氧化（燃烧）：</strong>发光放热明显，反应剧烈，如物质在氧气中燃烧、爆炸</div>
+                                <div>• <strong>缓慢氧化：</strong>进行得很慢，甚至不易察觉，不发光但放热，如铁生锈、食物腐败、动植物的呼吸、酒和醋的酿造、农家肥的腐熟</div>
+                                <div>• <strong>共同点：</strong>都是氧化反应，都放出热量；不同点：剧烈程度不同</div>
+                                <div>• <strong>自燃：</strong>由缓慢氧化引起的自发燃烧（如白磷自燃，热量积累达到着火点）</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>催化剂与催化作用（中考概念辨析）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>定义：</strong>在化学反应中能<strong>改变</strong>其他物质的化学反应速率（加快或减慢），而本身的<strong>质量</strong>和<strong>化学性质</strong>在反应前后都没有发生变化的物质叫做催化剂（又叫触媒）。催化剂所起的作用叫催化作用。
+                            </div>
+                            <div class="highlight-box">
+                                <strong>关键词理解（"一变两不变"）：</strong>
+                                <div>• <strong>改变速率：</strong>可以加快也可以减慢（如MnO₂加快H₂O₂分解，橡胶中的防老剂减慢氧化）</div>
+                                <div>• <strong>质量不变：</strong>反应前后质量相等（物理质量不变，但可能参与中间过程）</div>
+                                <div>• <strong>化学性质不变：</strong>反应前后化学性质相同（物理性质可能改变，如颗粒变细小）</div>
+                                <div>• <strong>针对性：</strong>催化剂只对特定反应起作用（MnO₂对H₂O₂有效，对其他反应不一定）</div>
+                                <div>• <strong>不参与产物：</strong>催化剂不是反应物，也不是生成物，写在箭头上方</div>
+                            </div>
+                            <div>• <strong>常见催化剂：</strong>MnO₂（过氧化氢、氯酸钾分解）、Fe₂O₃（某些反应）、酶（生物催化剂）</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 氧化物分支 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>氧化物 Oxides</span>
+                    <span class="tag tag-blue">二元化合物</span>
+                    <span class="zj-badge">中考必考</span>
+                </div>
+                <div class="children">
+                    
+                    <!-- 非金属氧化物 -->
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>非金属氧化物</span>
+                            <span class="tag tag-orange">酸性/不成盐</span>
+                        </div>
+                        <div class="children">
+                            
+                            <!-- CO -->
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>一氧化碳 CO</span>
+                                    <span class="tag tag-red">剧毒</span>
+                                    <span class="zj-badge">中考重点</span>
+                                </div>
+                                <div class="children">
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>物理性质（详细）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div>• <strong>颜色状态：</strong>无色、无味、无臭的气体</div>
+                                            <div>• <strong>密度：</strong>比空气略小（相对分子质量为28，空气平均为29），可用排水法收集</div>
+                                            <div>• <strong>溶解性：</strong>难溶于水（1体积水溶解0.02体积CO），这是煤气中毒难以察觉的原因</div>
+                                            <div>• <strong>熔沸点：</strong>熔点-205°C，沸点-191.5°C</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>化学性质（浙江中考三大考点）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>1. 可燃性（淡蓝色火焰，放热反应）</strong>
+                                                <div class="reaction-equation">2CO + O₂ = 2CO₂（点燃）</div>
+                                                <div>• <strong>现象：</strong>产生淡蓝色火焰，放出大量的热，生成能使澄清石灰水变浑浊的气体</div>
+                                                <div>• <strong>注意：</strong>火焰颜色较淡，需在光线较暗处观察；点燃前必须验纯，防止爆炸</div>
+                                                <div>• <strong>毒性原理：</strong>CO与血红蛋白结合能力比O₂强200-300倍，造成组织缺氧</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>2. 还原性（冶炼金属，初中重点实验）</strong>
+                                                <div class="reaction-equation">CO + CuO = Cu + CO₂（加热）</div>
+                                                <div>• <strong>现象：</strong>黑色粉末逐渐变为光亮的红色固体，生成的气体能使澄清石灰水变浑浊</div>
+                                                <div>• <strong>实验要点：</strong>①先通CO后加热（排尽空气，防止爆炸）；②先停热后停CO（防止生成的Cu被氧化）；③尾气处理（点燃或用气球收集，因CO有毒）</div>
+                                                <div class="reaction-equation">3CO + Fe₂O₃ = 2Fe + 3CO₂（高温）</div>
+                                                <div>• <strong>工业应用：</strong>高炉炼铁原理，CO作为还原剂将铁从铁矿石中还原出来</div>
+                                            </div>
+                                            <div class="highlight-box">
+                                                <strong>3. 毒性：</strong>煤气中毒的元凶，冬天燃煤取暖需通风
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>制备与用途</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>工业制备（水煤气反应）：</strong>
+                                                <div class="reaction-equation">C + H₂O(g) = CO + H₂（高温）</div>
+                                                <div>• <strong>说明：</strong>g表示气态（gas），即水蒸气；此反应在高温下进行，碳作为还原剂将水还原</div>
+                                                <div>• <strong>产物：</strong>CO和H₂的混合物称为"水煤气"，是重要的气体燃料和化工原料</div>
+                                            </div>
+                                            <div class="highlight-box">
+                                                <strong>实验室制法：</strong>
+                                                <div class="reaction-equation">HCOOH = CO↑ + H₂O（浓H₂SO₄，Δ）</div>
+                                                <div>• <strong>反应条件：</strong>必须标注"浓H₂SO₄"作脱水剂，"Δ"表示加热</div>
+                                                <div>• <strong>原理：</strong>浓硫酸脱去甲酸（HCOOH）中的H₂O，生成CO</div>
+                                                <div>• <strong>收集方法：</strong>排水法（因CO难溶于水）或向下排空气法（密度略小于空气）</div>
+                                            </div>
+                                            <div>• <strong>用途：</strong>①气体燃料（水煤气）；②冶炼金属的还原剂（铁、铜等）；③化工合成原料（制甲醇、光气等）</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- CO₂ -->
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>二氧化碳 CO₂</span>
+                                    <span class="tag tag-green">酸性氧化物</span>
+                                    <span class="zj-badge">浙江高频</span>
+                                </div>
+                                <div class="children">
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>物理性质（详细）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div>• <strong>颜色状态：</strong>无色无味的气体</div>
+                                            <div>• <strong>密度：</strong>比空气大（相对分子质量44 > 空气29），因此可用向上排空气法收集</div>
+                                            <div>• <strong>溶解性：</strong>能溶于水（1体积水溶解1体积CO₂），且与水反应生成碳酸，因此一般不用排水法收集</div>
+                                            <div>• <strong>三态变化：</strong>加压降温可变为液态；固态CO₂称为"干冰"，升华时吸收大量的热，使周围温度降低，用于人工降雨、舞台烟雾效果、食品冷藏运输</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>化学性质（浙江中考必考）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>1. 酸性氧化物通性（不能使干燥石蕊变色）</strong>
+                                                <div class="reaction-equation">CO₂ + H₂O = H₂CO₃（碳酸，使石蕊试液变红）</div>
+                                                <div>• <strong>注意：</strong>CO₂本身不能使石蕊变色，是生成的H₂CO₃使石蕊变红；加热后红色褪去（H₂CO₃分解）</div>
+                                                <div class="reaction-equation">CO₂ + 2NaOH = Na₂CO₃ + H₂O（吸收CO₂）</div>
+                                                <div>• <strong>应用：</strong>用NaOH溶液吸收尾气中的CO₂</div>
+                                                <div class="reaction-equation">CO₂ + Ca(OH)₂ = CaCO₃↓ + H₂O（澄清石灰水变浑浊，检验CO₂）</div>
+                                                <div>• <strong>现象：</strong>澄清石灰水变浑浊（生成白色沉淀），这是检验CO₂的特征反应</div>
+                                                <div>• <strong>过量：</strong>继续通CO₂，沉淀溶解：CaCO₃ + H₂O + CO₂ = Ca(HCO₃)₂</div>
+                                            </div>
+                                            <div class="highlight-box">
+                                                <strong>2. 氧化性（弱，高温下表现）：</strong>
+                                                <div class="reaction-equation">CO₂ + C = 2CO（高温，吸热反应）</div>
+                                                <div>• <strong>现象：</strong>黑色固体逐渐减少，生成无色气体</div>
+                                                <div class="reaction-equation">CO₂ + 2Mg = 2MgO + C（点燃）</div>
+                                                <div>• <strong>特例：</strong>镁能在CO₂中燃烧，说明CO₂不支持燃烧是相对的（活泼金属例外）</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>浙江中考易错点：</strong>CO₂能溶于水且与水反应，因此实验室制取CO₂<strong>不能用排水法</strong>收集，必须用<strong>向上排空气法</strong>。若用排水法需用饱和碳酸氢钠溶液或快速收集以减少损失。
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>制备与检验（浙江实验题高频）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>实验室制法（必会）：</strong>
+                                                <div class="reaction-equation">CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑</div>
+                                                <div>• <strong>药品：</strong>石灰石（或大理石，主要成分CaCO₃）和稀盐酸</div>
+                                                <div>• <strong>装置：</strong>固液不加热型（启普发生器或简易装置：锥形瓶+长颈漏斗/分液漏斗）</div>
+                                                <div>• <strong>不能用硫酸：</strong>CaCO₃ + H₂SO₄ = CaSO₄ + H₂O + CO₂↑，但生成的CaSO₄微溶，覆盖在石灰石表面，阻止反应继续</div>
+                                                <div>• <strong>不能用浓盐酸：</strong>浓盐酸有挥发性，使CO₂中混有HCl气体，导致气体不纯</div>
+                                                <div>• <strong>收集：</strong>向上排空气法（密度大于空气，且能溶于水）</div>
+                                                <div>• <strong>验满：</strong>将燃着的木条放在集气瓶口，若木条熄灭，则已集满</div>
+                                                <div>• <strong>检验：</strong>将气体通入澄清石灰水，若石灰水变浑浊，则为CO₂</div>
+                                                <div>• <strong>净化：</strong>除HCl用饱和NaHCO₃溶液，干燥用浓H₂SO₄</div>
+                                            </div>
+                                            <div class="highlight-box">
+                                                <strong>工业制法（高温煅烧石灰石）：</strong>
+                                                <div class="reaction-equation">CaCO₃ = CaO + CO₂↑（高温）</div>
+                                                <div>• 此反应也是工业上制生石灰（CaO）和CO₂的方法</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>碳循环与温室效应（浙江科学与社会联系）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div>• <strong>自然界碳循环：</strong>植物光合作用吸收CO₂释放O₂（6CO₂ + 6H₂O = C₆H₁₂O₆ + 6O₂，光照、叶绿体），生物呼吸和燃料燃烧释放CO₂</div>
+                                            <div>• <strong>温室效应：</strong>CO₂、CH₄、N₂O等温室气体导致全球变暖</div>
+                                            <div>• <strong>低碳生活措施：</strong>①开发新能源（太阳能、风能、氢能）；②植树造林，增加绿化面积；③节能减排，减少化石燃料使用；④乘坐公共交通，减少私家车出行</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 其他非金属氧化物 -->
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>其他非金属氧化物</span>
+                                    <span class="hs-badge">高中拓展</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>二氧化硫 SO₂：</strong>无色有刺激性气味的气体，酸性氧化物，具有漂白性（与有色物质化合生成无色物质，可逆，加热恢复原色），是形成酸雨的主要物质之一（煤燃烧产生）</div>
+                                    <div>• <strong>三氧化硫 SO₃：</strong>标准状况下为固体，与水剧烈反应生成硫酸：SO₃ + H₂O = H₂SO₄</div>
+                                    <div>• <strong>氮氧化物 NO/NO₂：</strong>NO无色，NO₂红棕色，都是有毒气体，造成光化学烟雾和硝酸型酸雨</div>
+                                    <div>• <strong>二氧化硅 SiO₂：</strong>原子晶体，硬度大，熔点高，与氢氟酸反应（特性）：SiO₂ + 4HF = SiF₄↑ + 2H₂O，是光导纤维和石英玻璃的主要原料</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 金属氧化物 - 浙江初中重点 -->
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>金属氧化物</span>
+                            <span class="tag tag-purple">碱性/两性</span>
+                            <span class="zj-badge">中考三剑客</span>
+                        </div>
+                        <div class="children">
+                            
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>碱性氧化物（初中重点掌握）</span>
+                                </div>
+                                <div class="children">
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>氧化钙 CaO（生石灰）</span>
+                                            <span class="zj-badge">浙江必考</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>物理性质：</strong>白色块状固体，常用作干燥剂（海苔、饼干包装中的小袋子）
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>化学性质1：与水反应（放热反应，初中重点）</strong>
+                                                <div class="reaction-equation">CaO + H₂O = Ca(OH)₂</div>
+                                                <div>• <strong>现象：</strong>块状固体逐渐变为粉末，放出大量的热（触摸试管壁感到发烫），溶液温度显著升高</div>
+                                                <div>• <strong>产物：</strong>生成Ca(OH)₂（氢氧化钙，俗称熟石灰、消石灰），微溶于水，水溶液呈碱性</div>
+                                                <div>• <strong>用途：</strong>食品干燥剂（吸收水分），但需注意：①遇水放热，不可浸水；②不可食用；③包装破损后失效</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>化学性质2：与酸反应（碱性氧化物通性）</strong>
+                                                <div class="reaction-equation">CaO + 2HCl = CaCl₂ + H₂O</div>
+                                                <div>• <strong>现象：</strong>白色固体逐渐溶解，溶液温度升高（因为CaO与酸反应实质是先与水反应生成Ca(OH)₂，再与酸中和，两步都放热）</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>浙江中考高频实验：干燥剂变质探究（重点）</strong>
+                                                <div>• <strong>变质过程：</strong>CaO吸收空气中的H₂O生成Ca(OH)₂，Ca(OH)₂再吸收CO₂生成CaCO₃：CaO → Ca(OH)₂ → CaCO₃</div>
+                                                <div>• <strong>检验方法：</strong></div>
+                                                <div>  ① <strong>检验是否含CaO：</strong>取样加水，若放热（温度计示数升高/触摸发烫），则含CaO；若不放热，则已完全变质</div>
+                                                <div>  ② <strong>检验是否含Ca(OH)₂：</strong>取样溶于水（或加水后过滤），取上层清液滴加酚酞试液，若变红，则含Ca(OH)₂</div>
+                                                <div>  ③ <strong>检验是否含CaCO₃：</strong>取样加稀盐酸，若有气泡产生（CO₂），则含CaCO₃</div>
+                                                <div>• <strong>注意：</strong>若有CaO存在，步骤①加水后也会生成Ca(OH)₂，会干扰步骤②中原本Ca(OH)₂的检验，因此需设计实验排除干扰或分别取样</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>氧化铁 Fe₂O₃（铁锈主要成分）</span>
+                                            <span class="zj-badge">浙江必考</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>物理性质：</strong>红棕色（或红色、红褐色）固体，无磁性，铁锈的主要成分（铁锈是Fe₂O₃·nH₂O，含结晶水）
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>化学性质1：与酸反应（除锈原理，中考高频）</strong>
+                                                <div class="reaction-equation">Fe₂O₃ + 6HCl = 2FeCl₃ + 3H₂O</div>
+                                                <div>• <strong>现象：</strong>红棕色固体逐渐减少（或逐渐消失），溶液由无色变为黄色（Fe³⁺的颜色）</div>
+                                                <div>• <strong>注意：</strong>生成的FeCl₃溶液是黄色的，不是浅绿色（浅绿色是Fe²⁺，如FeCl₂）</div>
+                                                <div>• <strong>工业应用：</strong>用稀盐酸或稀硫酸除去钢铁表面的铁锈，但时间不宜过长，否则内部的铁会继续与酸反应</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>化学性质2：被还原（高炉炼铁原理，初中重点）</strong>
+                                                <div class="reaction-equation">3CO + Fe₂O₃ = 2Fe + 3CO₂（高温）</div>
+                                                <div>• <strong>现象：</strong>红棕色粉末逐渐变为黑色固体（铁粉），生成的气体能使澄清石灰水变浑浊</div>
+                                                <div>• <strong>其他还原剂：</strong>也可用H₂或C还原：</div>
+                                                <div class="reaction-equation">Fe₂O₃ + 3H₂ = 2Fe + 3H₂O（加热，试管口向下防炸裂）</div>
+                                                <div class="reaction-equation">2Fe₂O₃ + 3C = 4Fe + 3CO₂↑（高温）</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>铁生锈条件探究（浙江中考实验探究题高频考点）</strong>
+                                                <div>• <strong>实质：</strong>铁与<strong>氧气（O₂）和水（H₂O）</strong>同时接触发生的复杂化学反应，是缓慢氧化过程</div>
+                                                <div>• <strong>控制变量法实验设计：</strong></div>
+                                                <div>  ① <strong>干燥空气：</strong>铁钉放在干燥试管中（无水），不生锈 → 证明水是必要条件</div>
+                                                <div>  ② <strong>煮沸蒸馏水：</strong>除去水中溶解的O₂，铁钉浸入后油封（无氧），不生锈 → 证明氧气是必要条件</div>
+                                                <div>  ③ <strong>食盐水：</strong>铁钉浸入食盐水中，生锈速度加快 → 证明电解质（NaCl）能加速生锈</div>
+                                                <div>• <strong>防锈方法原理：</strong>隔绝O₂和H₂O中的至少一种：①涂油（机械零件）；②刷漆（门窗、栏杆）；③镀金属（镀锌、镀铬）；④烤蓝（锯条表面生成致密氧化膜）；⑤制成不锈钢（加入Cr、Ni等改变内部结构）</div>
+                                                <div>• <strong>注意：</strong>铁锈（Fe₂O₃·nH₂O）结构疏松多孔，不能阻止内部的铁继续与O₂、H₂O接触，因此铁锈会继续向内锈蚀，需及时除去</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>氧化铜 CuO</span>
+                                            <span class="zj-badge">浙江必考</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div class="exam-box">
+                                                <strong>物理性质：</strong>黑色粉末状固体（铜丝加热表面生成的黑色物质）
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>化学性质1：与酸反应</strong>
+                                                <div class="reaction-equation">CuO + H₂SO₄ = CuSO₄ + H₂O</div>
+                                                <div>• <strong>现象：</strong>黑色固体逐渐减少（或逐渐消失），溶液由无色变为蓝色（生成Cu²⁺，硫酸铜溶液呈蓝色）</div>
+                                                <div>• <strong>同理：</strong>CuO + 2HCl = CuCl₂ + H₂O，溶液变为蓝绿色（氯化铜溶液颜色）</div>
+                                            </div>
+                                            <div class="exam-box">
+                                                <strong>化学性质2：被还原（初中重点实验，H₂、CO、C还原CuO）</strong>
+                                                <div class="reaction-equation">CuO + H₂ = Cu + H₂O（加热）</div>
+                                                <div>• <strong>现象：</strong>黑色固体逐渐变为光亮的红色固体（铜），试管口有水珠生成（H₂O）</div>
+                                                <div>• <strong>操作：</strong>先通H₂后加热（排空气防爆炸），先停热后停H₂（防生成的Cu被氧化），试管口略向下倾斜（防冷凝水倒流炸裂试管）</div>
+                                                <div class="reaction-equation">CuO + CO = Cu + CO₂（加热）</div>
+                                                <div>• <strong>现象：</strong>黑色固体逐渐变为光亮的红色固体，生成的气体能使澄清石灰水变浑浊（CO₂）</div>
+                                                <div>• <strong>操作：</strong>尾气处理（点燃CO，防止污染）</div>
+                                                <div class="reaction-equation">2CuO + C = 2Cu + CO₂↑（高温）</div>
+                                                <div>• <strong>现象：</strong>黑色固体逐渐变为红色，生成能使澄清石灰水变浑浊的气体</div>
+                                            </div>
+                                            <div class="highlight-box">
+                                                <strong>制备方法：</strong>铜在空气中加热氧化
+                                                <div class="reaction-equation">2Cu + O₂ = 2CuO（加热）</div>
+                                                <div>• <strong>现象：</strong>紫红色光亮的铜丝表面逐渐变为黑色</div>
+                                                <div>• <strong>铜锈：</strong>铜在潮湿空气中与O₂、H₂O、CO₂共同作用生成碱式碳酸铜（铜绿）：2Cu + O₂ + H₂O + CO₂ = Cu₂(OH)₂CO₃（绿色）</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tree-node level-3">
+                                        <div class="node-header" onclick="toggleNode(this)">
+                                            <span class="node-icon">▶</span>
+                                            <span>其他碱性氧化物（初中了解）</span>
+                                        </div>
+                                        <div class="children level-4">
+                                            <div>• <strong>氧化镁 MgO：</strong>白色固体，熔点很高（约2800°C），常用作耐火材料（耐火砖、坩埚），与酸反应：MgO + 2HCl = MgCl₂ + H₂O</div>
+                                            <div>• <strong>氧化钠 Na₂O/氧化钾 K₂O：</strong>白色固体，与水反应比CaO更剧烈，生成NaOH/KOH（强碱），反应放出大量热</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>两性氧化物</span>
+                                    <span class="hs-badge">高中重点</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="highlight-box">
+                                        <strong>氧化铝 Al₂O₃（刚玉、蓝宝石、红宝石主要成分）：</strong>初中教材可能提及其作为铝表面保护膜耐酸碱的性质，高中系统学习其两性
+                                        <div>• <strong>与酸反应：</strong>Al₂O₃ + 6HCl = 2AlCl₃ + 3H₂O</div>
+                                        <div>• <strong>与碱反应：</strong>Al₂O₃ + 2NaOH = 2NaAlO₂ + H₂O（或写作Na[Al(OH)₄]，四羟基合铝酸钠）</div>
+                                        <div>• <strong>特性：</strong>高熔点（约2050°C），硬度大（刚玉），是电解法冶炼铝的原料（溶于冰晶石Na₃AlF₆降低熔点）</div>
+                                    </div>
+                                    <div class="highlight-box">
+                                        <strong>氧化锌 ZnO：</strong>高中两性氧化物例子，与Al₂O₃类似，既能与酸反应又能与碱反应
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>过氧化物与特殊氧化物</span>
+                                    <span class="hs-badge">高中拓展</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>过氧化钠 Na₂O₂：</strong>淡黄色固体，强氧化性，供氧剂（用于呼吸面具、潜水艇、宇宙飞船）</div>
+                                    <div class="reaction-equation">2Na₂O₂ + 2H₂O = 4NaOH + O₂↑</div>
+                                    <div class="reaction-equation">2Na₂O₂ + 2CO₂ = 2Na₂CO₃ + O₂</div>
+                                    <div>• <strong>四氧化三铁 Fe₃O₄（磁性氧化铁）：</strong>黑色固体，有磁性，可看作FeO·Fe₂O₃（含+2价和+3价铁），是铁在纯氧中燃烧或高温下与水蒸气反应的产物</div>
+                                    <div class="reaction-equation">3Fe + 2O₂ = Fe₃O₄（点燃，火星四射）</div>
+                                    <div class="reaction-equation">3Fe + 4H₂O(g) = Fe₃O₄ + 4H₂（高温）</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 酸分支 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>酸 Acids</span>
+                    <span class="tag tag-red">电离出的阳离子有且仅有H⁺</span>
+                    <span class="zj-badge">中考重点</span>
+                </div>
+                <div class="children">
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>酸的定义与电离（详细）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>酸的定义：</strong>电离时产生的<strong>阳离子有且仅有氢离子（H⁺）</strong>的化合物
+                                <div>• <strong>关键词"有且仅有"：</strong>如NaHSO₄（硫酸氢钠）电离时产生Na⁺、H⁺、SO₄²⁻，阳离子除了H⁺还有Na⁺，因此不是酸，而是<strong>酸式盐</strong></div>
+                                <div>• <strong>电离方程式示例：</strong></div>
+                                <div>HCl = H⁺ + Cl⁻</div>
+                                <div>H₂SO₄ = 2H⁺ + SO₄²⁻</div>
+                                <div>HNO₃ = H⁺ + NO₃⁻</div>
+                                <div>CH₃COOH ⇌ H⁺ + CH₃COO⁻（可逆，部分电离，弱酸）</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>初中三大强酸（必须掌握）</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>盐酸 HCl（氢氯酸）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>氯化氢（HCl）气体的水溶液，无色液体，有刺激性气味；<strong>浓盐酸（质量分数约37%）具有强挥发性</strong>，打开瓶盖瓶口有白雾（HCl气体与空气中水蒸气结合形成的盐酸小液滴）</div>
+                                    <div>• <strong>化学性质：</strong>具有酸的通性，与金属氧化物反应：Fe₂O₃ + 6HCl = 2FeCl₃ + 3H₂O</div>
+                                    <div>• <strong>用途：</strong>金属除锈、制造药物（如盐酸麻黄碱）、胃液中含稀盐酸（约0.5%）帮助消化</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>硫酸 H₂SO₄</span>
+                                    <span class="zj-badge">浙江高频</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>物理性质：</strong>无色、粘稠、油状液体，不易挥发（高沸点），密度比水大（浓硫酸密度约1.84g/cm³），溶于水放出大量的热（稀释时必须酸入水！）
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>浓硫酸特性（初中三大特性，中考高频）：</strong>
+                                        <div>1. <strong>吸水性（物理性质）：</strong>能吸收空气中的水分或其他物质中的游离水，常用作<strong>干燥剂</strong>，可干燥中性气体（O₂、H₂、N₂、CO、CH₄）和酸性气体（CO₂、HCl、SO₂），<strong>不能干燥碱性气体（NH₃）</strong>，因为会发生反应：H₂SO₄ + 2NH₃ = (NH₄)₂SO₄</div>
+                                        <div>2. <strong>脱水性（化学性质）：</strong>能将有机物中的氢、氧元素按水的组成比（2:1）脱去，使物质碳化变黑。如将浓硫酸滴在蔗糖上：蔗糖逐渐变黑、膨胀，形成疏松多孔的"黑面包"（同时发生氧化还原反应产生刺激性气味气体SO₂）</div>
+                                        <div>3. <strong>强氧化性：</strong>与金属反应不生成H₂（高中系统学习），常温下使铁、铝钝化（表面形成致密氧化膜，阻止反应继续，因此可用铁/铝槽车运输浓硫酸）</div>
+                                        <div>4. <strong>稀释操作（必考）：</strong>一定要把<strong>浓硫酸沿器壁慢慢注入水中</strong>，并不断用玻璃棒搅拌，使热量及时散失。<strong>绝对不能把水倒入浓硫酸中</strong>，否则水密度小浮在表面，浓硫酸溶于水放热使水沸腾，导致液滴飞溅伤人</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>硝酸 HNO₃</span>
+                                    <span class="hs-badge">高中重点</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>无色液体，有刺激性气味，易挥发，见光或受热易分解：4HNO₃ = 4NO₂↑ + O₂↑ + 2H₂O（光照/加热），因此保存在棕色试剂瓶中并放在阴凉处</div>
+                                    <div>• <strong>化学性质：</strong>强氧化性酸，与金属反应不生成H₂（无论浓稀，无论金属活泼性），初中了解即可</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>初中常见弱酸</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>碳酸 H₂CO₃</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>不稳定性：</strong>易分解：H₂CO₃ = H₂O + CO₂↑，因此碳酸饮料打开后冒泡，加热后酸性消失</div>
+                                    <div>• <strong>弱酸性：</strong>使石蕊试液变红，但加热后又变回紫色（CO₂逸出）</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>醋酸 CH₃COOH（乙酸）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>无色液体，有强烈刺激性气味（醋味），是<strong>食醋的主要成分（约3%-5%）</strong></div>
+                                    <div>• <strong>用途：</strong>除去水垢（主要成分CaCO₃和Mg(OH)₂）：CaCO₃ + 2CH₃COOH = (CH₃COO)₂Ca + H₂O + CO₂↑</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>酸的通性（H⁺性质，中考必考详细版）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>1. 指示剂变色（变色的是指示剂！）：</strong>
+                                <div>• <strong>紫色石蕊试液：</strong>遇酸变红色</div>
+                                <div>• <strong>无色酚酞试液：</strong>遇酸不变色（无色）</div>
+                                <div>• <strong>注意：</strong>是酸使指示剂变色，而不是指示剂使酸变色；若题目说"酸使酚酞变红"则是错误的</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>2. 与活泼金属反应（置换反应）：</strong>酸 + 金属 → 盐 + 氢气
+                                <div class="reaction-equation">Zn + 2HCl = ZnCl₂ + H₂↑</div>
+                                <div>• <strong>现象：</strong>锌粒逐渐溶解，表面产生大量气泡，放出热量</div>
+                                <div class="reaction-equation">Fe + H₂SO₄ = FeSO₄ + H₂↑</div>
+                                <div>• <strong>现象：</strong>铁钉逐渐溶解，表面产生气泡，溶液由无色变为浅绿色（Fe²⁺），触摸试管感到温热</div>
+                                <div>• <strong>金属活动性要求：</strong>必须是<strong>H前金属</strong>（K、Ca、Na、Mg、Al、Zn、Fe、Sn、Pb），且K、Ca、Na太活泼，与酸反应剧烈，可能发生爆炸，一般不用；<strong>H后金属</strong>（Cu、Hg、Ag、Pt、Au）不与稀盐酸/稀硫酸反应</div>
+                                <div>• <strong>注意：</strong>铁与酸反应生成<strong>+2价亚铁盐</strong>（浅绿色），不是+3价铁盐（黄色）</div>
+                                <div>• <strong>特例：</strong>硝酸（无论浓稀）、浓硫酸与金属反应不生成H₂（氧化性酸），而是生成水、氮氧化物或硫氧化物</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>3. 与金属氧化物反应（除锈原理）：</strong>酸 + 金属氧化物 → 盐 + 水
+                                <div class="reaction-equation">Fe₂O₃ + 6HCl = 2FeCl₃ + 3H₂O</div>
+                                <div>• <strong>现象：</strong>红棕色铁锈逐渐减少（消失），溶液由无色变为黄色（Fe³⁺）</div>
+                                <div class="reaction-equation">CuO + H₂SO₄ = CuSO₄ + H₂O</div>
+                                <div>• <strong>现象：</strong>黑色固体逐渐减少（消失），溶液由无色变为蓝色（Cu²⁺）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>4. 与碱反应（中和反应）：</strong>酸 + 碱 → 盐 + 水（放热反应）
+                                <div class="reaction-equation">HCl + NaOH = NaCl + H₂O</div>
+                                <div>• <strong>现象：</strong>若无明显现象（如NaOH与HCl），需借助指示剂判断反应发生；若生成沉淀（如H₂SO₄ + Ba(OH)₂ = BaSO₄↓ + 2H₂O），则观察到白色沉淀</div>
+                                <div>• <strong>应用：</strong>①治疗胃酸过多（Mg(OH)₂、Al(OH)₃、NaHCO₃）；②改良酸性土壤（熟石灰Ca(OH)₂）；③处理工厂酸性废水；④蚊虫叮咬涂肥皂水（中和蚁酸）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>5. 与某些盐反应（复分解反应）：</strong>强酸制弱酸，或生成沉淀/气体/水
+                                <div class="reaction-equation">CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑（实验室制CO₂）</div>
+                                <div>• <strong>现象：</strong>白色固体溶解，产生大量气泡（CO₂能使澄清石灰水变浑浊）</div>
+                                <div class="reaction-equation">AgNO₃ + HCl = AgCl↓ + HNO₃（检验Cl⁻）</div>
+                                <div>• <strong>现象：</strong>产生白色沉淀，该沉淀不溶于稀硝酸</div>
+                                <div class="reaction-equation">BaCl₂ + H₂SO₄ = BaSO₄↓ + 2HCl（检验SO₄²⁻）</div>
+                                <div>• <strong>现象：</strong>产生白色沉淀，该沉淀不溶于稀硝酸</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 碱分支 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>碱 Bases</span>
+                    <span class="tag tag-green">电离出的阴离子有且仅有OH⁻</span>
+                    <span class="zj-badge">中考重点</span>
+                </div>
+                <div class="children">
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>碱的定义与电离（详细）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>碱的定义：</strong>电离时产生的<strong>阴离子有且仅有氢氧根离子（OH⁻）</strong>的化合物
+                                <div>• <strong>关键词"有且仅有"：</strong>如Cu₂(OH)₂CO₃（碱式碳酸铜）电离时产生OH⁻，但还产生CO₃²⁻等其他阴离子，因此不是碱，而是<strong>碱式盐</strong>；又如Mg(OH)Cl是碱式盐而非碱</div>
+                                <div>• <strong>电离方程式示例：</strong></div>
+                                <div>NaOH = Na⁺ + OH⁻</div>
+                                <div>Ca(OH)₂ = Ca²⁺ + 2OH⁻</div>
+                                <div>KOH = K⁺ + OH⁻</div>
+                                <div>NH₃·H₂O ⇌ NH₄⁺ + OH⁻（可逆，部分电离，弱碱）</div>
+                                <div>• <strong>注意：</strong>碱中一定含有氢、氧两种元素（OH⁻），但含有氢氧元素的不一定是碱（如H₂O、碱式盐）</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>初中四大碱（必须掌握详细性质）</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>氢氧化钠 NaOH（烧碱/火碱/苛性钠）</span>
+                                    <span class="zj-badge">高频</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>白色片状或块状固体，易溶于水，溶解时放出大量的热（溶液温度显著升高），有强吸水性（潮解性），暴露在空气中易吸收水分而逐渐溶解，有强腐蚀性（若不慎沾到皮肤，先用大量水冲洗，再涂硼酸溶液）</div>
+                                    <div>• <strong>化学性质1：与CO₂反应（变质原理，中考必考）：</strong></div>
+                                    <div class="reaction-equation">2NaOH + CO₂ = Na₂CO₃ + H₂O</div>
+                                    <div>• <strong>现象：</strong>无明显现象（因此需用其他方法检验变质，如加酸看气泡），因此NaOH必须密封保存，防止变质</div>
+                                    <div>• <strong>化学性质2：与SO₂反应（新增，工业脱硫）：</strong></div>
+                                    <div class="reaction-equation">2NaOH + SO₂ = Na₂SO₃ + H₂O</div>
+                                    <div>• <strong>应用：</strong>吸收工业废气中的SO₂，防止酸雨</div>
+                                    <div>• <strong>若SO₂过量：</strong>Na₂SO₃ + SO₂ + H₂O = 2NaHSO₃</div>
+                                    <div>• <strong>用途：</strong>制肥皂、造纸、纺织、印染、精炼石油、用作干燥剂（不能干燥酸性气体如CO₂、HCl、SO₂）</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>氢氧化钙 Ca(OH)₂（熟石灰/消石灰）</span>
+                                    <span class="zj-badge">高频</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>白色粉末状固体，<strong>微溶于水</strong>（溶解度随温度升高而降低，特例！），水溶液俗称石灰水，悬浊液俗称石灰乳/石灰浆；对皮肤有腐蚀性</div>
+                                    <div>• <strong>制备：</strong>生石灰与水反应：CaO + H₂O = Ca(OH)₂（放热反应，放出大量的热）</div>
+                                    <div>• <strong>化学性质1：与CO₂反应（检验CO₂，中考必考）：</strong></div>
+                                    <div class="reaction-equation">Ca(OH)₂ + CO₂ = CaCO₃↓ + H₂O</div>
+                                    <div>• <strong>现象：</strong>澄清石灰水变浑浊（产生白色沉淀）</div>
+                                    <div>• <strong>继续通CO₂：</strong>CaCO₃ + H₂O + CO₂ = Ca(HCO₃)₂，沉淀溶解，溶液变澄清（碳酸氢钙可溶）</div>
+                                    <div>• <strong>化学性质2：与酸反应（改良酸性土壤）：</strong>Ca(OH)₂ + 2HCl = CaCl₂ + 2H₂O</div>
+                                    <div>• <strong>化学性质3：与Na₂CO₃反应（工业制烧碱）：</strong></div>
+                                    <div class="reaction-equation">Ca(OH)₂ + Na₂CO₃ = CaCO₃↓ + 2NaOH</div>
+                                    <div>• <strong>用途：</strong>①检验CO₂；②改良酸性土壤（中和土壤酸性）；③砌砖抹墙（与空气中CO₂反应变硬：Ca(OH)₂ + CO₂ = CaCO₃↓ + H₂O）；④配制波尔多液（与CuSO₄混合）；⑤处理硫酸厂废水</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>氨水 NH₃·H₂O</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>氨气的水溶液，无色液体，有强烈的刺激性气味（氨臭味），易挥发（需密封保存），密度比水小</div>
+                                    <div>• <strong>化学性质：</strong>弱碱性，使酚酞变红；与酸反应：NH₃·H₂O + HCl = NH₄Cl + H₂O</div>
+                                    <div>• <strong>特殊用途：</strong>制备Al(OH)₃时只能用氨水（弱碱），不能用NaOH（强碱），因为Al(OH)₃溶于强碱：Al³⁺ + 3NH₃·H₂O = Al(OH)₃↓ + 3NH₄⁺</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>难溶性碱（掌握颜色和受热分解）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>氢氧化铜 Cu(OH)₂：</strong>蓝色絮状沉淀，不溶于水，受热分解：Cu(OH)₂ = CuO（黑色） + H₂O（加热）</div>
+                                    <div>• <strong>氢氧化铁 Fe(OH)₃：</strong>红褐色沉淀，不溶于水，受热分解：2Fe(OH)₃ = Fe₂O₃（红棕色） + 3H₂O（加热）</div>
+                                    <div>• <strong>氢氧化亚铁 Fe(OH)₂：</strong>白色絮状沉淀，不溶于水，在空气中极易被氧化：白色 → 灰绿色 → 红褐色（最终变为Fe(OH)₃）</div>
+                                    <div>• <strong>氢氧化镁 Mg(OH)₂：</strong>白色沉淀，不溶于水，用于治疗胃酸过多（抗酸药）：Mg(OH)₂ + 2HCl = MgCl₂ + 2H₂O</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>碱的通性（OH⁻性质，中考必考详细版）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>1. 指示剂变色：</strong>
+                                <div>• <strong>紫色石蕊试液：</strong>遇碱变蓝色</div>
+                                <div>• <strong>无色酚酞试液：</strong>遇碱变红色（遇浓碱先变红后褪色，因强氧化性）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>2. 与非金属氧化物反应（生成盐和水）：</strong>
+                                <div class="reaction-equation">2NaOH + CO₂ = Na₂CO₃ + H₂O</div>
+                                <div>• <strong>应用：</strong>解释NaOH必须密封保存的原因（吸收CO₂变质）</div>
+                                <div class="reaction-equation">Ca(OH)₂ + CO₂ = CaCO₃↓ + H₂O</div>
+                                <div>• <strong>应用：</strong>检验CO₂，澄清石灰水变浑浊</div>
+                                <div class="reaction-equation">2NaOH + SO₂ = Na₂SO₃ + H₂O</div>
+                                <div>• <strong>应用：</strong>吸收工业废气中的SO₂，防止酸雨</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>3. 与酸反应（中和反应）：</strong>
+                                <div class="reaction-equation">HCl + NaOH = NaCl + H₂O</div>
+                                <div>• <strong>现象：</strong>若无明显现象需用指示剂；若难溶性碱与酸反应则固体溶解</div>
+                                <div>• <strong>应用：</strong>熟石灰改良酸性土壤；氢氧化铝治疗胃酸过多：Al(OH)₃ + 3HCl = AlCl₃ + 3H₂O</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>4. 与某些盐反应（复分解反应，反应物均需可溶）：</strong>
+                                <div class="reaction-equation">2NaOH + CuSO₄ = Cu(OH)₂↓（蓝色） + Na₂SO₄</div>
+                                <div>• <strong>现象：</strong>产生蓝色絮状沉淀</div>
+                                <div class="reaction-equation">3NaOH + FeCl₃ = Fe(OH)₃↓（红褐色） + 3NaCl</div>
+                                <div>• <strong>现象：</strong>产生红褐色沉淀</div>
+                                <div class="reaction-equation">Ca(OH)₂ + Na₂CO₃ = CaCO₃↓（白色） + 2NaOH</div>
+                                <div>• <strong>应用：</strong>工业制烧碱（纯碱制烧碱）</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>氢氧化铝 Al(OH)₃（两性氢氧化物）</span>
+                            <span class="zj-badge">初中了解</span>
+                            <span class="hs-badge">高中系统</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="highlight-box">
+                                <strong>初中要求：</strong>
+                                <div>• <strong>物理性质：</strong>白色胶状沉淀，难溶于水</div>
+                                <div>• <strong>制备：</strong>只能用氨水（弱碱）与铝盐反应制备，不能用NaOH等强碱，因为Al(OH)₃能溶于强碱</div>
+                                <div>• <strong>用途：</strong>①治疗胃酸过多（弱碱性，不损伤胃壁）：Al(OH)₃ + 3HCl = AlCl₃ + 3H₂O；②净水剂（明矾[KAl(SO₄)₂·12H₂O]溶于水生成Al(OH)₃胶体吸附悬浮杂质）</div>
+                            </div>
+                            <div class="highlight-box">
+                                <strong>高中拓展（两性）：</strong>
+                                <div>• <strong>与酸反应：</strong>Al(OH)₃ + 3HCl = AlCl₃ + 3H₂O</div>
+                                <div>• <strong>与碱反应：</strong>Al(OH)₃ + NaOH = NaAlO₂ + 2H₂O（偏铝酸钠）或写作Na[Al(OH)₄]（四羟基合铝酸钠）</div>
+                                <div>• <strong>热分解：</strong>2Al(OH)₃ = Al₂O₃ + 3H₂O（加热）</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 盐分支 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>盐 Salts</span>
+                    <span class="tag tag-purple">金属离子/铵根 + 酸根</span>
+                    <span class="zj-badge">中考重点</span>
+                </div>
+                <div class="children">
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>初中常见盐（详细掌握）</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>氯化钠 NaCl（食盐）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>白色晶体，易溶于水，水溶液呈中性（pH=7），熔点801°C，沸点1413°C</div>
+                                    <div>• <strong>来源：</strong>海水晒盐（蒸发结晶）、盐湖、盐矿（井盐、岩盐）</div>
+                                    <div>• <strong>粗盐提纯步骤：</strong>①溶解（加水搅拌）；②过滤（除不溶性杂质）；③蒸发（结晶）；④计算产率</div>
+                                    <div>• <strong>用途：</strong>①调味（0.9%生理盐水）；②农业选种（用16%NaCl溶液，饱满种子下沉）；③化工原料（制Na₂CO₃、Cl₂、NaOH等）；④腌渍食品（防腐，使细菌脱水死亡）</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>碳酸钠 Na₂CO₃（纯碱/苏打）</span>
+                                    <span class="zj-badge">高频</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>白色粉末，易溶于水，水溶液呈碱性（pH>7，使酚酞变红），有涩味</div>
+                                    <div>• <strong>俗名由来：</strong>因其水溶液呈碱性，且碱性较强，故称"纯碱"，但实质是盐（由金属离子和酸根离子构成），不是碱</div>
+                                    <div>• <strong>化学性质：</strong></div>
+                                    <div>  ① 与酸反应：Na₂CO₃ + 2HCl = 2NaCl + H₂O + CO₂↑（产生气泡）</div>
+                                    <div>  ② 与碱反应：Na₂CO₃ + Ca(OH)₂ = CaCO₃↓ + 2NaOH（工业制烧碱）</div>
+                                    <div>  ③ 与盐反应：Na₂CO₃ + CaCl₂ = CaCO₃↓ + 2NaCl（产生白色沉淀）</div>
+                                    <div>• <strong>用途：</strong>玻璃制造（与SiO₂反应）、造纸、纺织、洗涤剂（去油污）、食品加工（中和面团酸味）</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>碳酸氢钠 NaHCO₃（小苏打）</span>
+                                    <span class="zj-badge">高频</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>白色晶体，可溶于水，水溶液呈弱碱性（比Na₂CO₃碱性弱）</div>
+                                    <div>• <strong>化学性质1：受热分解（重点）：</strong></div>
+                                    <div class="reaction-equation">2NaHCO₃ = Na₂CO₃ + H₂O + CO₂↑（加热）</div>
+                                    <div>• <strong>现象：</strong>产生能使澄清石灰水变浑浊的气体，试管口有水珠生成</div>
+                                    <div>• <strong>化学性质2：与酸反应：</strong>NaHCO₃ + HCl = NaCl + H₂O + CO₂↑（反应比Na₂CO₃剧烈，产生气泡速度快）</div>
+                                    <div>• <strong>用途：</strong>①发酵粉（与酸反应或受热产生CO₂，使糕点疏松多孔）；②治疗胃酸过多（碱性弱，对胃刺激小）；③灭火器原料（与Al₂(SO₄)₃反应产生CO₂）；④制汽水</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>碳酸钙 CaCO₃（石灰石/大理石）</span>
+                                    <span class="zj-badge">高频</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>白色固体，难溶于水，是大理石、石灰石、方解石、白垩的主要成分</div>
+                                    <div>• <strong>化学性质1：与酸反应（实验室制CO₂）：</strong></div>
+                                    <div class="reaction-equation">CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑</div>
+                                    <div>• <strong>现象：</strong>白色固体逐渐溶解，产生大量气泡，生成能使澄清石灰水变浑浊的气体</div>
+                                    <div>• <strong>化学性质2：高温分解（工业制生石灰）：</strong></div>
+                                    <div class="reaction-equation">CaCO₃ = CaO + CO₂↑（高温）</div>
+                                    <div>• <strong>用途：</strong>①建筑材料（天安门华表、大理石地板）；②补钙剂（咀嚼片）；③实验室制CO₂；④工业制生石灰和CO₂</div>
+                                    <div>• <strong>溶洞形成：</strong>CaCO₃ + H₂O + CO₂ ⇌ Ca(HCO₃)₂（可逆反应，碳酸氢钙可溶于水），钟乳石、石笋的形成是此反应的逆过程</div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>硫酸铜 CuSO₄</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>无水CuSO₄为白色粉末，易溶于水；CuSO₄·5H₂O（五水合硫酸铜，胆矾/蓝矾）为蓝色晶体</div>
+                                    <div>• <strong>特性：</strong>无水CuSO₄遇水变蓝（生成CuSO₄·5H₂O），用于检验H₂O的存在</div>
+                                    <div>• <strong>化学性质：</strong></div>
+                                    <div>  ① 与碱：CuSO₄ + 2NaOH = Cu(OH)₂↓（蓝色） + Na₂SO₄</div>
+                                    <div>  ② 与金属（置换）：Fe + CuSO₄ = FeSO₄ + Cu（湿法炼铜，铁表面变红，溶液变浅绿）</div>
+                                    <div>• <strong>用途：</strong>①波尔多液[Ca(OH)₂ + CuSO₄]杀菌剂（农业防病虫害，不能用铁桶盛装）；②精炼铜；③游泳池消毒</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>盐的化学性质（复分解反应条件，中考必考详细版）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>1. 与金属反应（置换反应）：</strong>前置后，盐需溶（K、Ca、Na除外，因太活泼先与水反应）
+                                <div class="reaction-equation">Fe + CuSO₄ = FeSO₄ + Cu</div>
+                                <div>• <strong>现象：</strong>铁钉表面逐渐覆盖一层红色固体（铜），溶液由蓝色逐渐变为浅绿色（Fe²⁺）</div>
+                                <div>• <strong>应用：</strong>湿法炼铜；不能用铁桶装波尔多液或硫酸铜溶液</div>
+                                <div class="reaction-equation">Cu + 2AgNO₃ = Cu(NO₃)₂ + 2Ag</div>
+                                <div>• <strong>现象：</strong>铜丝表面逐渐覆盖一层银白色固体（银），溶液由无色逐渐变为蓝色（Cu²⁺）</div>
+                                <div>• <strong>注意：</strong>铁与盐溶液反应生成<strong>+2价亚铁盐</strong>（浅绿色）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>2. 与酸反应（强酸制弱酸，或生成沉淀/气体/水）：</strong>
+                                <div class="reaction-equation">CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑</div>
+                                <div>• <strong>现象：</strong>白色固体溶解，产生大量气泡（CO₂能使澄清石灰水变浑浊），用于检验碳酸盐</div>
+                                <div class="reaction-equation">AgNO₃ + HCl = AgCl↓ + HNO₃（检验Cl⁻）</div>
+                                <div>• <strong>现象：</strong>产生白色沉淀，该沉淀不溶于稀硝酸</div>
+                                <div class="reaction-equation">BaCl₂ + H₂SO₄ = BaSO₄↓ + 2HCl（检验SO₄²⁻）</div>
+                                <div>• <strong>现象：</strong>产生白色沉淀，该沉淀不溶于稀硝酸</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>3. 与碱反应（复分解，反应物均需溶，生成沉淀）：</strong>
+                                <div class="reaction-equation">CuSO₄ + 2NaOH = Cu(OH)₂↓（蓝色） + Na₂SO₄</div>
+                                <div>• <strong>现象：</strong>产生蓝色絮状沉淀</div>
+                                <div class="reaction-equation">Ca(OH)₂ + Na₂CO₃ = CaCO₃↓（白色） + 2NaOH</div>
+                                <div>• <strong>应用：</strong>工业制烧碱（纯碱制烧碱）</div>
+                            </div>
+                            <div class="exam-box">
+                                <strong>4. 与盐反应（复分解，反应物均需溶，生成沉淀）：</strong>
+                                <div class="reaction-equation">NaCl + AgNO₃ = AgCl↓ + NaNO₃</div>
+                                <div class="reaction-equation">Na₂SO₄ + BaCl₂ = BaSO₄↓ + 2NaCl</div>
+                                <div class="reaction-equation">Na₂CO₃ + CaCl₂ = CaCO₃↓ + 2NaCl</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>盐的溶解性规律（口诀必背）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box">
+                                <strong>溶解性口诀（中考必背）：</strong><br>
+                                <strong>钾钠铵硝皆可溶</strong>（K⁺、Na⁺、NH₄⁺、NO₃⁻的盐都溶于水）<br>
+                                <strong>盐酸盐不溶银亚汞</strong>（AgCl、Hg₂Cl₂不溶于水，其余盐酸盐都溶）<br>
+                                <strong>硫酸盐不溶钡和铅</strong>（BaSO₄、PbSO₄不溶于水，CaSO₄、Ag₂SO₄微溶，其余硫酸盐都溶）<br>
+                                <strong>碳酸盐只溶钾钠铵</strong>（K₂CO₃、Na₂CO₃、(NH₄)₂CO₃可溶，其余碳酸盐难溶，但可溶于酸）<br>
+                                <strong>碱溶钾钠钡钙铵</strong>（KOH、NaOH、Ba(OH)₂可溶，Ca(OH)₂微溶，NH₃·H₂O可溶，其余碱难溶）<br>
+                                <strong>酸多可溶</strong>（常见酸一般可溶）
+                            </div>
+                            <div class="highlight-box">
+                                <strong>特殊记忆（中考高频）：</strong><br>
+                                • <strong>AgCl</strong>和<strong>BaSO₄</strong>：白色沉淀，<strong>不溶于稀硝酸</strong>，用于分别检验Cl⁻和SO₄²⁻<br>
+                                • <strong>CaCO₃</strong>、<strong>BaCO₃</strong>：白色沉淀，<strong>溶于稀硝酸</strong>且产生气泡（CO₂）<br>
+                                • <strong>Fe(OH)₃</strong>：红褐色沉淀；<strong>Cu(OH)₂</strong>：蓝色沉淀；<strong>Mg(OH)₂</strong>：白色沉淀
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 金属分支 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>金属 Metals</span>
+                    <span class="tag tag-orange">单质</span>
+                    <span class="zj-badge">中考重点</span>
+                </div>
+                <div class="children">
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>金属活动性顺序（必背，浙江中考必考）</span>
+                            <span class="tag tag-red">核心</span>
+                        </div>
+                        <div class="children level-4">
+                            <div class="exam-box" style="font-family: monospace; font-size: 1.1rem; text-align: center;">
+                                <strong>K Ca Na Mg Al Zn Fe Sn Pb (H) Cu Hg Ag Pt Au</strong><br>
+                                <span style="font-size: 0.9rem;">金属活动性由强逐渐减弱（还原性减弱）</span>
+                            </div>
+                            <div class="exam-box">
+                                <strong>应用规律（中考必考）：</strong><br>
+                                1. 位置越靠前，金属活动性越<strong>强</strong>，越易失去电子，化学性质越活泼<br>
+                                2. 位于<strong>H前面</strong>的金属能与稀盐酸/稀硫酸反应置换出<strong>氢气</strong>（K、Ca、Na除外，因太活泼，与水反应剧烈）<br>
+                                3. 位于<strong>前面的金属</strong>能把位于<strong>后面的金属</strong>从其<strong>盐溶液</strong>中置换出来（K、Ca、Na除外，先与水反应）<br>
+                                4. <strong>铁</strong>参与置换反应生成<strong>+2价亚铁盐</strong>（浅绿色），不是+3价铁盐（黄色）
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>初中重点金属单质（详细）</span>
+                        </div>
+                        <div class="children">
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>铁 Fe（中考重中之重）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>物理性质：</strong>银白色金属光泽（铁粉为黑色），质软（纯铁），有良好的延展性、导电性和导热性，<strong>能被磁化</strong>（吸引铁、钴、镍等物质），熔点1535°C，沸点2750°C
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>化学性质1：与氧气反应（条件不同产物不同）：</strong>
+                                        <div class="reaction-equation">3Fe + 2O₂ = Fe₃O₄（点燃，火星四射）</div>
+                                        <div>• <strong>现象：</strong>剧烈燃烧，火星四射，放出大量的热，生成黑色固体（Fe₃O₄，四氧化三铁）</div>
+                                        <div>• <strong>注意：</strong>铁在氧气中燃烧生成<strong>Fe₃O₄</strong>（磁性氧化铁），不是Fe₂O₃！Fe₃O₄可看作FeO·Fe₂O₃，含+2价和+3价铁</div>
+                                        <div class="reaction-equation">4Fe + 3O₂ = 2Fe₂O₃（缓慢氧化，铁生锈）</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>化学性质2：与酸反应：</strong>
+                                        <div class="reaction-equation">Fe + 2HCl = FeCl₂ + H₂↑</div>
+                                        <div>• <strong>现象：</strong>铁钉逐渐溶解，表面产生气泡，溶液由无色变为浅绿色（Fe²⁺）</div>
+                                        <div>• <strong>注意：</strong>生成的是<strong>+2价亚铁盐</strong>（浅绿色），不是+3价铁盐（黄色）</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>化学性质3：与盐溶液反应（湿法炼铜）：</strong>
+                                        <div class="reaction-equation">Fe + CuSO₄ = FeSO₄ + Cu</div>
+                                        <div>• <strong>现象：</strong>铁钉表面逐渐覆盖一层红色固体（铜），溶液由蓝色逐渐变为浅绿色</div>
+                                        <div>• <strong>应用：</strong>古代湿法炼铜；<strong>不能用铁桶装波尔多液或硫酸铜溶液</strong>（会腐蚀铁桶并降低药效）</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>铁生锈（中考实验探究高频）：</strong>
+                                        <div>• <strong>实质：</strong>铁与<strong>O₂、H₂O</strong>同时接触发生的复杂缓慢氧化反应，产物为Fe₂O₃·nH₂O（铁锈，疏松多孔，红棕色）</div>
+                                        <div>• <strong>防锈原理：</strong>隔绝O₂和H₂O中的至少一种</div>
+                                        <div>• <strong>方法：</strong>涂油（机械零件）、刷漆（门窗、栏杆）、镀金属（镀锌、镀铬）、烤蓝（锯条）、制成不锈钢（加Cr、Ni）</div>
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>冶炼（高炉炼铁，还原法）：</strong>
+                                        <div class="reaction-equation">3CO + Fe₂O₃ = 2Fe + 3CO₂（高温）</div>
+                                        <div>• <strong>原料：</strong>铁矿石（Fe₂O₃）、焦炭（燃烧提供热量并制CO）、石灰石（除SiO₂造渣）、热空气</div>
+                                        <div>• <strong>产物：</strong>生铁（含碳2%-4.3%，不是纯铁），不是钢</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>铝 Al（重点：氧化膜保护）</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>物理性质：</strong>银白色轻金属（密度2.7g/cm³，小于铁），具有良好的延展性、导电性（仅次于银、铜）和导热性，熔点660°C
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>核心性质：抗腐蚀性（中考必考，详细机制）</strong>
+                                        <div>• <strong>原因：</strong>铝在空气中与氧气反应，表面生成一层致密的氧化铝（Al₂O₃）氧化膜，这层氧化膜<strong>非常致密</strong>，能牢固地覆盖在铝表面，阻止内部的铝继续与氧气反应，从而保护铝不再被氧化</div>
+                                        <div class="reaction-equation">4Al + 3O₂ = 2Al₂O₃（常温下自然形成）</div>
+                                        <div>• <strong>特性：</strong>这层氧化膜不仅能阻止铝与氧气反应，还能阻止铝与水反应，因此铝制品在空气中非常稳定，具有良好的抗腐蚀性</div>
+                                        <div>• <strong>破坏与再生：</strong>若氧化膜被破坏（如用砂纸打磨），铝会立即与氧气反应重新生成氧化膜</div>
+                                        <div>• <strong>应用：</strong>铝合金门窗、易拉罐、飞机材料、高压锅、铝箔（香烟包装）</div>
+                                    </div>
+                                    <div class="highlight-box">
+                                        <strong>化学性质：</strong>
+                                        <div>• <strong>与酸：</strong>2Al + 6HCl = 2AlCl₃ + 3H₂↑（氧化膜被酸溶解后，内部的铝与酸反应）</div>
+                                        <div>• <strong>与碱（高中）：</strong>2Al + 2NaOH + 2H₂O = 2NaAlO₂ + 3H₂↑，说明铝具有一定的两性</div>
+                                        <div>• <strong>铝热反应（高中）：</strong>2Al + Fe₂O₃ = 2Fe + Al₂O₃（高温，放出大量的热，用于焊接铁轨）</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>铜 Cu</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div class="exam-box">
+                                        <strong>物理性质：</strong>紫红色（红色）金属，有良好的延展性，导电性仅次于银（常用作导线），导热性好，熔点1083°C
+                                    </div>
+                                    <div class="exam-box">
+                                        <strong>化学性质：</strong>
+                                        <div>• <strong>与氧气：</strong>2Cu + O₂ = 2CuO（加热，铜丝表面变黑）</div>
+                                        <div>• <strong>生锈（铜绿）：</strong>2Cu + O₂ + H₂O + CO₂ = Cu₂(OH)₂CO₃（碱式碳酸铜，绿色，铜器表面铜绿）</div>
+                                        <div>• <strong>与强氧化性酸（高中）：</strong>Cu与浓硫酸、浓硝酸反应，但不与稀盐酸、稀硫酸反应（H后金属）</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-node level-2">
+                                <div class="node-header" onclick="toggleNode(this)">
+                                    <span class="node-icon">▶</span>
+                                    <span>钠 Na、钾 K（初中了解，高中重点）</span>
+                                    <span class="hs-badge">高中重点</span>
+                                </div>
+                                <div class="children level-4">
+                                    <div>• <strong>物理性质：</strong>银白色金属，质软（可用刀切割），密度小于水（浮在水面），熔点低（Na为97.8°C），保存在煤油中（隔绝空气和水）</div>
+                                    <div>• <strong>化学性质：</strong>极活泼，与水剧烈反应</div>
+                                    <div class="reaction-equation">2Na + 2H₂O = 2NaOH + H₂↑</div>
+                                    <div>• <strong>现象：</strong>浮（密度小于水）、熔（反应放热，熔点低）、游（产生气体推动）、响（反应剧烈）、红（加酚酞变红，生成NaOH）</div>
+                                    <div>• <strong>与O₂：</strong>常温生成Na₂O（白色），加热生成Na₂O₂（淡黄色，过氧化钠，高中重点）</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tree-node level-1">
+                        <div class="node-header" onclick="toggleNode(this)">
+                            <span class="node-icon">▶</span>
+                            <span>金属材料与合金（详细）</span>
+                        </div>
+                        <div class="children level-4">
+                            <div>• <strong>合金定义：</strong>金属与金属（或非金属）熔合而成的具有金属特性的物质，属于混合物</div>
+                            <div>• <strong>合金特性（重点）：</strong>①熔点一般低于成分金属（如武德合金熔点低作保险丝）；②硬度一般大于成分金属（如硬铝比纯铝硬）；③抗腐蚀性强于成分金属（如不锈钢比纯铁耐腐蚀）</div>
+                            <div>• <strong>生铁 vs 钢：</strong>都是铁碳合金，区别在含碳量：生铁2%-4.3%（硬而脆，可铸不可锻），钢0.03%-2%（硬而韧，可铸可锻）</div>
+                            <div>• <strong>重要合金：</strong>①不锈钢（加Cr、Ni，抗腐蚀）；②武德合金（低熔点，保险丝）；③黄铜（Cu-Zn）；④青铜（Cu-Sn）；⑤硬铝（Al-Cu-Mg-Mn-Si，航空材料）</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 物质转化关系 - 浙江中考最爱 -->
+            <div class="tree-node level-0">
+                <div class="node-header" onclick="toggleNode(this)">
+                    <span class="node-icon">▶</span>
+                    <span>物质转化关系网络（浙江中考推断题核心）</span>
+                    <span class="zj-badge">推断题</span>
+                </div>
+                <div class="children level-4">
+                    <div class="exam-box">
+                        <strong>钙系列转化链（必会详细版）：</strong><br>
+                        <div class="reaction-equation">① CaCO₃ = CaO + CO₂↑（高温煅烧，工业制生石灰和CO₂）</div>
+                        <div>• <strong>现象：</strong>白色固体分解，生成能使澄清石灰水变浑浊的气体</div>
+                        <div class="reaction-equation">② CaO + H₂O = Ca(OH)₂（放热反应，生石灰变熟石灰）</div>
+                        <div>• <strong>现象：</strong>块状固体变为粉末，放出大量的热，温度升高</div>
+                        <div class="reaction-equation">③ Ca(OH)₂ + CO₂ = CaCO₃↓ + H₂O（检验CO₂，石灰水变浑浊）</div>
+                        <div>• <strong>现象：</strong>澄清石灰水变浑浊，产生白色沉淀</div>
+                        <div class="reaction-equation">④ Ca(OH)₂ + Na₂CO₃ = CaCO₃↓ + 2NaOH（工业制烧碱）</div>
+                        <div>• <strong>现象：</strong>产生白色沉淀</div>
+                        <div class="reaction-equation">⑤ CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑（实验室制CO₂，检验碳酸盐）</div>
+                        <div>• <strong>现象：</strong>白色固体溶解，产生气泡</div>
+                    </div>
+                    <div class="exam-box">
+                        <strong>铜系列转化链（推断题常考）：</strong><br>
+                        <div class="reaction-equation">① 2Cu + O₂ = 2CuO（加热，紫红色固体表面变黑）</div>
+                        <div class="reaction-equation">② CuO + H₂SO₄ = CuSO₄ + H₂O（黑色固体逐渐减少，溶液变蓝）</div>
+                        <div class="reaction-equation">③ CuSO₄ + 2NaOH = Cu(OH)₂↓ + Na₂SO₄（产生蓝色沉淀）</div>
+                        <div class="reaction-equation">④ Cu(OH)₂ = CuO + H₂O（加热，蓝色沉淀变黑）</div>
+                        <div class="reaction-equation">⑤ CuO + H₂ = Cu + H₂O（加热，黑色固体变红，试管口有水珠）</div>
+                        <div class="reaction-equation">⑥ Fe + CuSO₄ = FeSO₄ + Cu（铁表面变红，溶液变浅绿）</div>
+                    </div>
+                    <div class="exam-box">
+                        <strong>碳系列转化链：</strong><br>
+                        <div class="reaction-equation">① 2C + O₂(不足) = 2CO（不完全燃烧）</div>
+                        <div class="reaction-equation">② 2CO + O₂ = 2CO₂（点燃，蓝色火焰）</div>
+                        <div class="reaction-equation">③ CO₂ + H₂O = H₂CO₃（使石蕊变红）</div>
+                        <div class="reaction-equation">④ H₂CO₃ = H₂O + CO₂↑（分解，红色褪去）</div>
+                        <div class="reaction-equation">⑤ CO₂ + Ca(OH)₂ = CaCO₃↓ + H₂O（石灰水变浑浊）</div>
+                        <div class="reaction-equation">⑥ CaCO₃ + 2HCl = CaCl₂ + H₂O + CO₂↑</div>
+                    </div>
+                    <div class="highlight-box">
+                        <strong>推断题突破口（特征颜色/现象必背）：</strong><br>
+                        • <strong>颜色：</strong>红色（Cu、Fe₂O₃）、黑色（CuO、Fe₃O₄、C、MnO₂、铁粉）、蓝色（Cu(OH)₂、CuSO₄溶液）、浅绿色（Fe²⁺）、黄色（Fe³⁺）、紫红色（KMnO₄）<br>
+                        • <strong>沉淀：</strong>蓝色Cu(OH)₂、红褐色Fe(OH)₃、白色Mg(OH)₂/BaSO₄/AgCl/CaCO₃<br>
+                        • <strong>气体：</strong>唯一碱性气体NH₃（使湿润红色石蕊试纸变蓝）<br>
+                        • <strong>特征反应：</strong>不溶于稀硝酸的白色沉淀只有AgCl和BaSO₄；溶于酸冒泡的是碳酸盐
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-4 border-t-2 border-gray-200 text-center text-gray-500 text-sm">
+            <p>浙教版《科学》化学复习提纲 · 初中重点+高中拓展 白林不可燃xKimi</p>
+            <p class="mt-1">标注 <span class="zj-badge">浙江中考</span> 为必考高频，<span class="hs-badge">高中</span> 为拓展内容</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleNode(header) {
+            const node = header.parentElement;
+            const children = node.querySelector(':scope > .children');
+            const icon = header.querySelector('.node-icon');
+            
+            if (children) {
+                children.classList.toggle('collapsed');
+                icon.classList.toggle('expanded');
+            }
+        }
+        
+        function expandAll() {
+            document.querySelectorAll('.children').forEach(el => {
+                el.classList.remove('collapsed');
+            });
+            document.querySelectorAll('.node-icon').forEach(el => {
+                el.classList.add('expanded');
+            });
+        }
+        
+        function collapseAll() {
+            document.querySelectorAll('.children').forEach(el => {
+                el.classList.add('collapsed');
+            });
+            document.querySelectorAll('.node-icon').forEach(el => {
+                el.classList.remove('expanded');
+            });
+            // 保持一级节点展开
+            document.querySelectorAll('.level-0 > .children').forEach(el => {
+                el.classList.remove('collapsed');
+            });
+            document.querySelectorAll('.level-0 > .node-header .node-icon').forEach(el => {
+                el.classList.add('expanded');
+            });
+        }
+        
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const allNodes = document.querySelectorAll('.tree-node');
+            
+            // 清除之前的高亮
+            document.querySelectorAll('.match-highlight').forEach(el => {
+                el.outerHTML = el.innerHTML;
+            });
+            
+            if (searchTerm === '') {
+                allNodes.forEach(node => {
+                    node.style.display = '';
+                });
+                return;
+            }
+            
+            allNodes.forEach(node => {
+                const text = node.textContent.toLowerCase();
+                const header = node.querySelector(':scope > .node-header');
+                
+                if (text.includes(searchTerm)) {
+                    node.style.display = '';
+                    // 展开父节点
+                    let parent = node.parentElement;
+                    while (parent) {
+                        if (parent.classList.contains('children')) {
+                            parent.classList.remove('collapsed');
+                            const parentNode = parent.parentElement;
+                            const parentIcon = parentNode.querySelector(':scope > .node-header .node-icon');
+                            if (parentIcon) parentIcon.classList.add('expanded');
+                        }
+                        parent = parent.parentElement;
+                    }
+                    
+                    // 高亮匹配文本
+                    if (header && !node.classList.contains('level-4')) {
+                        const headerText = header.querySelector('span:nth-child(2)');
+                        if (headerText && !headerText.querySelector('.tag') && !headerText.querySelector('.zj-badge') && !headerText.querySelector('.hs-badge')) {
+                            const originalText = headerText.textContent;
+                            const regex = new RegExp(`(${searchTerm})`, 'gi');
+                            headerText.innerHTML = originalText.replace(regex, '<span class="match-highlight">$1</span>');
+                        }
+                    }
+                } else {
+                    // 如果子节点匹配，保留显示
+                    const children = node.querySelectorAll('.tree-node');
+                    let hasMatch = false;
+                    children.forEach(child => {
+                        if (child.textContent.toLowerCase().includes(searchTerm)) {
+                            hasMatch = true;
+                        }
+                    });
+                    node.style.display = hasMatch ? '' : 'none';
+                }
+            });
+        });
+        
+        // 初始化：展开一级节点
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.level-0 > .children').forEach(el => {
+                el.classList.remove('collapsed');
+            });
+            document.querySelectorAll('.level-0 > .node-header .node-icon').forEach(el => {
+                el.classList.add('expanded');
+            });
+        });
+    </script>
+</body>
+</html>
